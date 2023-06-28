@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import com.adammcneilly.recipe.shared.Greeting
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import template.theme.TemplateTheme
 
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    Greeting("Android")
+                    Text(text = Greeting().greet())
                 }
             }
         }
@@ -62,9 +63,4 @@ class MainActivity : ComponentActivity() {
             onDispose { }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
 }
