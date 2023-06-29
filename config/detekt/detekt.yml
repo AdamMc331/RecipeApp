@@ -292,6 +292,7 @@ naming:
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
+    excludes: ['**/androidMain/**', '**/iosMain/**']
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
