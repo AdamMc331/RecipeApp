@@ -17,7 +17,7 @@ fun RecipeApp(
     ) {
         Text(
             text = "Hello, Compose FOR REAL THOUGH IS IT WORKING?!",
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
         )
     }
 }
