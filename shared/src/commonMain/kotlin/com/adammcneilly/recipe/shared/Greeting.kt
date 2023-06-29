@@ -4,6 +4,6 @@ class Greeting {
     private val platform: Platform = getPlatform()
 
     fun greet(): String {
-        return "Hello Multiplatform, ${platform.name}!"
+        return "Hello Rewrite, ${platform.name}!"
     }
 }

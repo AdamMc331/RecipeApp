@@ -4,17 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import com.adammcneilly.recipe.shared.Greeting
+import com.adammcneilly.recipe.shared.RecipeApp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import template.theme.TemplateTheme
 
@@ -31,11 +27,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    Text(
-                        text = Greeting().greet(),
-                        modifier = Modifier
-                            .padding(32.dp),
-                    )
+                    RecipeApp()
                 }
             }
         }
