@@ -1,4 +1,4 @@
-package template
+package com.adammcneilly.recipe
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.adammcneilly.recipe.shared.RecipeApp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import template.theme.TemplateTheme
+import com.adammcneilly.recipe.theme.RecipeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             ConfigureTransparentSystemBars()
 
-            TemplateTheme {
+            RecipeTheme {
                 Surface(
                     color = MaterialTheme.colorScheme.background,
                 ) {

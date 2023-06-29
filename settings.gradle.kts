@@ -4,6 +4,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "template"
+rootProject.name = "Loo-McNeilly Recipe App"
 include(":app")
 include(":shared")

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        RecipeAppViewController_iosKt.RecipeAppViewController()
+        RecipeAppViewController_iosKt.recipeAppViewController()
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

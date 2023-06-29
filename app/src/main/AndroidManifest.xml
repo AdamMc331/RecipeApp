@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AppTheme">
 
         <activity
-            android:name="template.MainActivity"
+            android:name="com.adammcneilly.recipe.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
