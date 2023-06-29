@@ -16,7 +16,7 @@ fun RecipeApp(
             .fillMaxSize(),
     ) {
         Text(
-            text = "Hello, Compose Multiplatform!",
+            text = "Hello, Compose FOR REAL THOUGH IS IT WORKING?!",
             modifier = Modifier.align(Alignment.Center)
         )
     }
