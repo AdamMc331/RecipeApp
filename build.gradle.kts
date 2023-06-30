@@ -21,6 +21,7 @@ buildscript {
 plugins {
     id("io.gitlab.arturbosch.detekt").version(libs.versions.detektGradlePlugin)
     id("org.jmailen.kotlinter").version(libs.versions.kotlinter).apply(false)
+    alias(libs.plugins.kotlin.parcelize).apply(false)
 }
 
 apply(from = "buildscripts/githooks.gradle")

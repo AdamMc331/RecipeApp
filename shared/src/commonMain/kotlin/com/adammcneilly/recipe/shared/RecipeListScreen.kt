@@ -1,9 +1,11 @@
 package com.adammcneilly.recipe.shared
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -16,6 +18,7 @@ import com.slack.circuit.runtime.ui.ui
 /**
  * Screen to show a list of recipes.
  */
+@CommonParcelize
 object RecipeListScreen : Screen {
     data class RecipeListState(
         val recipes: List<String>,
@@ -53,6 +56,7 @@ fun RecipeListContent(
     Text(
         text = "Recipe List UI",
         modifier = modifier
+            .padding(32.dp)
             .clickable {
                 state.eventSink.invoke(
                     RecipeListScreen.RecipeListEvent.RecipeClicked("Test Recipe"),

@@ -15,6 +15,7 @@ import com.slack.circuit.runtime.ui.ui
 /**
  * Represents a screen in the app that shows a specific [initialRecipe].
  */
+@CommonParcelize
 data class RecipeDetailScreen(
     val initialRecipe: String,
 ) : Screen {

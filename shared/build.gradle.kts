@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose").version("1.4.1")
     id("org.jmailen.kotlinter")
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
