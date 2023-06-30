@@ -1,23 +1,24 @@
 package com.adammcneilly.recipe.shared
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.foundation.CircuitConfig
+import com.slack.circuit.foundation.CircuitContent
 
 @Composable
 fun RecipeApp(
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxSize(),
-    ) {
-        Text(
-            text = "Hello, Compose FOR REAL THOUGH IS IT WORKING?!",
-            modifier = Modifier.align(Alignment.Center),
+    val circuitConfig = CircuitConfig.Builder()
+        .addUiFactory(RecipeListScreenUiFactory())
+        .addPresenterFactory(RecipeListScreenPresenterFactory())
+        .build()
+
+    CircuitCompositionLocals(circuitConfig) {
+        CircuitContent(
+            screen = RecipeListScreen,
+            modifier = modifier,
         )
     }
 }
