@@ -1,4 +1,4 @@
-package template
+package com.adammcneilly.recipe
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,13 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import com.adammcneilly.recipe.shared.RecipeApp
+import com.adammcneilly.recipe.theme.RecipeTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import template.theme.TemplateTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,11 +23,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             ConfigureTransparentSystemBars()
 
-            TemplateTheme {
+            RecipeTheme {
                 Surface(
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    Greeting("Android")
+                    RecipeApp()
                 }
             }
         }
@@ -62,9 +62,4 @@ class MainActivity : ComponentActivity() {
             onDispose { }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
 }

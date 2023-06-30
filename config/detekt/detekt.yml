@@ -292,6 +292,7 @@ naming:
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
+    excludes: ['**/androidMain/**', '**/iosMain/**']
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
@@ -574,7 +575,7 @@ style:
   UnusedPrivateClass:
     active: true
   UnusedPrivateMember:
-    active: true
+    active: false
     allowedNames: '(_|ignored|expected|serialVersionUID)'
     ignoreAnnotated: ['Preview']
   UseArrayLiteralsInAnnotations:

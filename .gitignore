@@ -8,3 +8,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+shared/build
+recipeAppiOS/Podfile.lock
+recipeAppiOS/Pods/*
+recipeAppiOS/recipeAppiOS.xcworkspace/*
+recipeAppiOS/recipeAppiOS.xcodeproj/*
+!recipeAppiOS/recipeAppiOS.xcodeproj/project.pbxproj
+shared/shared.podspec
