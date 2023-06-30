@@ -32,6 +32,7 @@ fun RecipeApp(
         }
 
         val navigator = rememberCircuitNavigator(backstack) {
+            println("Is this being called?")
             // In the future, we need to handle a back press when we are at the root
             // screen (probably just close the app?)
         }

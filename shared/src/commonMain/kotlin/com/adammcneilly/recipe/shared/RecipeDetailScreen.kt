@@ -1,8 +1,11 @@
 package com.adammcneilly.recipe.shared
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -36,12 +39,13 @@ data class RecipeDetailScreen(
  * State management for the [RecipeDetailScreen].
  */
 class RecipeDetailPresenter(
+    private val initialRecipe: String,
     private val navigator: Navigator,
 ) : Presenter<RecipeDetailScreen.State> {
 
     @Composable
     override fun present(): RecipeDetailScreen.State {
-        return RecipeDetailScreen.State("") { event ->
+        return RecipeDetailScreen.State(initialRecipe) { event ->
             when (event) {
                 RecipeDetailScreen.Event.GoBack -> {
                     navigator.pop()
@@ -61,7 +65,13 @@ fun RecipeDetailContent(
 ) {
     Text(
         text = "Recipe Detail For: ${state.recipe}",
-        modifier = modifier,
+        modifier = modifier
+            .padding(32.dp)
+            .clickable {
+                state.eventSink.invoke(
+                    RecipeDetailScreen.Event.GoBack,
+                )
+            },
     )
 }
 
@@ -75,6 +85,7 @@ class RecipeDetailScreenUiFactory : Ui.Factory {
                 val initialRecipe = screen.initialRecipe
                 recipeDetailUi(initialRecipe)
             }
+
             else -> null
         }
     }
@@ -94,7 +105,12 @@ private fun recipeDetailUi(initialRecipe: String) = ui<RecipeDetailScreen.State>
 class RecipeDetailScreenPresenterFactory : Presenter.Factory {
     override fun create(screen: Screen, navigator: Navigator, context: CircuitContext): Presenter<*>? {
         return when (screen) {
-            is RecipeDetailScreen -> RecipeDetailPresenter(navigator)
+            is RecipeDetailScreen -> {
+                RecipeDetailPresenter(
+                    initialRecipe = screen.initialRecipe,
+                    navigator = navigator,
+                )
+            }
             else -> null
         }
     }
