@@ -1,5 +1,6 @@
 package com.adammcneilly.recipe.shared
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +16,7 @@ import com.slack.circuit.runtime.ui.ui
 object RecipeListScreen : Screen {
     data class RecipeListState(
         val recipes: List<String>,
+        val eventSink: (RecipeListEvent) -> Unit = {},
     ) : CircuitUiState
 
     sealed interface RecipeListEvent : CircuitUiEvent {
@@ -24,11 +26,19 @@ object RecipeListScreen : Screen {
     }
 }
 
-class RecipeListPresenter : Presenter<RecipeListScreen.RecipeListState> {
+class RecipeListPresenter(
+    private val navigator: Navigator,
+) : Presenter<RecipeListScreen.RecipeListState> {
 
     @Composable
     override fun present(): RecipeListScreen.RecipeListState {
-        return RecipeListScreen.RecipeListState(emptyList())
+        return RecipeListScreen.RecipeListState(emptyList()) { event ->
+            when (event) {
+                is RecipeListScreen.RecipeListEvent.RecipeClicked -> {
+                    navigator.goTo(RecipeDetailScreen(event.recipe))
+                }
+            }
+        }
     }
 }
 
@@ -39,7 +49,12 @@ fun RecipeList(
 ) {
     Text(
         text = "Recipe List UI",
-        modifier = modifier,
+        modifier = modifier
+            .clickable {
+                state.eventSink.invoke(
+                    RecipeListScreen.RecipeListEvent.RecipeClicked("Test Recipe"),
+                )
+            },
     )
 }
 
@@ -57,7 +72,7 @@ private fun recipeListUi() = ui<RecipeListScreen.RecipeListState> { state, modif
 class RecipeListScreenPresenterFactory : Presenter.Factory {
     override fun create(screen: Screen, navigator: Navigator, context: CircuitContext): Presenter<*>? {
         return when (screen) {
-            is RecipeListScreen -> RecipeListPresenter()
+            is RecipeListScreen -> RecipeListPresenter(navigator)
             else -> null
         }
     }
