@@ -10,13 +10,7 @@ plugins {
 kotlin {
     targetHierarchy.default()
 
-    android {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
+    android()
 
     cocoapods {
         version = "1.0.0"
@@ -65,7 +59,17 @@ kotlin {
 android {
     namespace = "com.adammcneilly.recipe.shared"
     compileSdk = libs.versions.compileSdk.get().toInt()
+
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        jvmToolchain(17)
     }
 }

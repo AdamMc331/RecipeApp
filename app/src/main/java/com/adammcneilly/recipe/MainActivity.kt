@@ -11,8 +11,8 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.adammcneilly.recipe.shared.RecipeApp
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.adammcneilly.recipe.theme.RecipeTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
