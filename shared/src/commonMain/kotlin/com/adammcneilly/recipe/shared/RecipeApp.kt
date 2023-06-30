@@ -9,10 +9,16 @@ import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.push
 import com.slack.circuit.foundation.rememberCircuitNavigator
 
+/**
+ * This is the main entry point into the application, showing the root screen and handles
+ * the most high level navigation support.
+ */
 @Composable
 fun RecipeApp(
     modifier: Modifier = Modifier,
 ) {
+    // In the future, we may want to look at some DI framework to make it easy to pass
+    // in all of these factories, or even consider the codegen that Circuit offers.
     val circuitConfig = CircuitConfig.Builder()
         .addUiFactory(RecipeListScreenUiFactory())
         .addUiFactory(RecipeDetailScreenUiFactory())
@@ -26,7 +32,8 @@ fun RecipeApp(
         }
 
         val navigator = rememberCircuitNavigator(backstack) {
-            // onRootPop?
+            // In the future, we need to handle a back press when we are at the root
+            // screen (probably just close the app?)
         }
 
         NavigableCircuitContent(

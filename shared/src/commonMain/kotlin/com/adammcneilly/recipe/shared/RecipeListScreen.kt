@@ -13,6 +13,9 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 
+/**
+ * Screen to show a list of recipes.
+ */
 object RecipeListScreen : Screen {
     data class RecipeListState(
         val recipes: List<String>,
@@ -43,7 +46,7 @@ class RecipeListPresenter(
 }
 
 @Composable
-fun RecipeList(
+fun RecipeListContent(
     state: RecipeListScreen.RecipeListState,
     modifier: Modifier = Modifier,
 ) {
@@ -67,7 +70,7 @@ class RecipeListScreenUiFactory : Ui.Factory {
     }
 }
 
-private fun recipeListUi() = ui<RecipeListScreen.RecipeListState> { state, modifier -> RecipeList(state, modifier) }
+private fun recipeListUi() = ui<RecipeListScreen.RecipeListState> { state, modifier -> RecipeListContent(state, modifier) }
 
 class RecipeListScreenPresenterFactory : Presenter.Factory {
     override fun create(screen: Screen, navigator: Navigator, context: CircuitContext): Presenter<*>? {

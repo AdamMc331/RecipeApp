@@ -12,55 +12,88 @@ import com.slack.circuit.runtime.presenter.Presenter
 import com.slack.circuit.runtime.ui.Ui
 import com.slack.circuit.runtime.ui.ui
 
+/**
+ * Represents a screen in the app that shows a specific [initialRecipe].
+ */
 data class RecipeDetailScreen(
-    private val initialRecipe: String,
+    val initialRecipe: String,
 ) : Screen {
-    data class RecipeDetailState(
+    data class State(
         val recipe: String,
+        val eventSink: (Event) -> Unit,
     ) : CircuitUiState
 
-    sealed interface RecipeDetailEvent : CircuitUiEvent {
-        // None
+    sealed interface Event : CircuitUiEvent {
+        /**
+         * Go back to the previous screen.
+         */
+        object GoBack : Event
     }
 }
 
-class RecipeDetailPresenter : Presenter<RecipeDetailScreen.RecipeDetailState> {
+/**
+ * State management for the [RecipeDetailScreen].
+ */
+class RecipeDetailPresenter(
+    private val navigator: Navigator,
+) : Presenter<RecipeDetailScreen.State> {
 
     @Composable
-    override fun present(): RecipeDetailScreen.RecipeDetailState {
-        return RecipeDetailScreen.RecipeDetailState("")
+    override fun present(): RecipeDetailScreen.State {
+        return RecipeDetailScreen.State("") { event ->
+            when (event) {
+                RecipeDetailScreen.Event.GoBack -> {
+                    navigator.pop()
+                }
+            }
+        }
     }
 }
 
+/**
+ * This is the actual UI to render inside a [RecipeDetailScreen].
+ */
 @Composable
-fun RecipeDetail(
-    state: RecipeDetailScreen.RecipeDetailState,
+fun RecipeDetailContent(
+    state: RecipeDetailScreen.State,
     modifier: Modifier = Modifier,
 ) {
     Text(
-        text = "Recipe Detail UI",
+        text = "Recipe Detail For: ${state.recipe}",
         modifier = modifier,
     )
 }
 
+/**
+ * Factory to create a [recipeDetailUi] for a given [Screen].
+ */
 class RecipeDetailScreenUiFactory : Ui.Factory {
     override fun create(screen: Screen, context: CircuitContext): Ui<*>? {
         return when (screen) {
-            // Look at docs to figure out how to get the initial recipe?
-            is RecipeDetailScreen -> recipeDetailUi()
+            is RecipeDetailScreen -> {
+                val initialRecipe = screen.initialRecipe
+                recipeDetailUi(initialRecipe)
+            }
             else -> null
         }
     }
 }
 
-private fun recipeDetailUi() = ui<RecipeDetailScreen.RecipeDetailState> { state, modifier ->
-    RecipeDetail(state, modifier)
+private fun recipeDetailUi(initialRecipe: String) = ui<RecipeDetailScreen.State> { state, modifier ->
+    val stateToUse = state.copy(
+        recipe = initialRecipe,
+    )
+
+    RecipeDetailContent(stateToUse, modifier)
 }
 
+/**
+ * Factory to create a [RecipeDetailPresenter].
+ */
 class RecipeDetailScreenPresenterFactory : Presenter.Factory {
     override fun create(screen: Screen, navigator: Navigator, context: CircuitContext): Presenter<*>? {
         return when (screen) {
-            is RecipeDetailScreen -> RecipeDetailPresenter()
+            is RecipeDetailScreen -> RecipeDetailPresenter(navigator)
             else -> null
         }
     }
