@@ -70,7 +70,9 @@ class RecipeListScreenUiFactory : Ui.Factory {
     }
 }
 
-private fun recipeListUi() = ui<RecipeListScreen.RecipeListState> { state, modifier -> RecipeListContent(state, modifier) }
+private fun recipeListUi() = ui<RecipeListScreen.RecipeListState> { state, modifier ->
+    RecipeListContent(state, modifier)
+}
 
 class RecipeListScreenPresenterFactory : Presenter.Factory {
     override fun create(screen: Screen, navigator: Navigator, context: CircuitContext): Presenter<*>? {
