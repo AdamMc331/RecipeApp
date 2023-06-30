@@ -70,6 +70,7 @@ android {
     }
 
     kotlin {
+        @Suppress("MagicNumber")
         jvmToolchain(17)
     }
 }
