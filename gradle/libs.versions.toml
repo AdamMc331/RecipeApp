@@ -3,6 +3,7 @@ accompanist = "0.30.1"
 activityCompose = "1.7.1"
 androidxTest = "1.1.5"
 appCompat = "1.6.1"
+circuit = "0.9.1-compose-mp"
 compileSdk = "33"
 composeBom = "2023.05.01"
 composeCompiler = "1.4.6"
@@ -42,4 +43,9 @@ gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 gradle-versions-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "gradleVersionsPlugin" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+# Using Chris Bane's fork for now to support iOS: Using a fork containing https://github.com/slackhq/circuit/pull/704
+slack-circuit = { module = "dev.chrisbanes.circuit:circuit-foundation", version.ref = "circuit" }
 square-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
+
+[plugins]
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinGradlePlugin" }
