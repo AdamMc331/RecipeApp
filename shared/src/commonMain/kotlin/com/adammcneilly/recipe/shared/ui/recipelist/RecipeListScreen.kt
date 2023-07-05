@@ -1,8 +1,10 @@
-package com.adammcneilly.recipe.shared
+package com.adammcneilly.recipe.shared.ui.recipelist
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.adammcneilly.recipe.shared.ui.recipelist.RecipeList
+import com.adammcneilly.recipe.shared.CommonParcelize
+import com.adammcneilly.recipe.shared.RecipeDetailScreen
+import com.adammcneilly.recipe.shared.ui.displaymodels.RecipeDisplayModel
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -18,13 +20,13 @@ import com.slack.circuit.runtime.ui.ui
 @CommonParcelize
 object RecipeListScreen : Screen {
     data class RecipeListState(
-        val recipes: List<String>,
+        val recipes: List<RecipeDisplayModel>,
         val eventSink: (RecipeListEvent) -> Unit = {},
     ) : CircuitUiState
 
     sealed interface RecipeListEvent : CircuitUiEvent {
         data class RecipeClicked(
-            val recipe: String,
+            val recipe: RecipeDisplayModel,
         ) : RecipeListEvent
     }
 }
@@ -35,10 +37,19 @@ class RecipeListPresenter(
 
     @Composable
     override fun present(): RecipeListScreen.RecipeListState {
-        return RecipeListScreen.RecipeListState(emptyList()) { event ->
+        // Here is where we would make a request to get the data we want
+        // let's hardcode for now.
+        val recipeList = (1..15).map { index ->
+            RecipeDisplayModel(
+                timeFrame = "30 Minutes",
+                name = "Recipe $index",
+            )
+        }
+
+        return RecipeListScreen.RecipeListState(recipeList) { event ->
             when (event) {
                 is RecipeListScreen.RecipeListEvent.RecipeClicked -> {
-                    navigator.goTo(RecipeDetailScreen(event.recipe))
+                    navigator.goTo(RecipeDetailScreen(event.recipe.name))
                 }
             }
         }
@@ -51,18 +62,14 @@ fun RecipeListContent(
     modifier: Modifier = Modifier,
 ) {
     RecipeList(
+        recipes = state.recipes,
         modifier = modifier,
+        onRecipeClicked = { recipe ->
+            state.eventSink.invoke(
+                RecipeListScreen.RecipeListEvent.RecipeClicked(recipe),
+            )
+        },
     )
-//    Text(
-//        text = "Recipe List UI",
-//        modifier = modifier
-//            .padding(32.dp)
-//            .clickable {
-//                state.eventSink.invoke(
-//                    RecipeListScreen.RecipeListEvent.RecipeClicked("Test Recipe"),
-//                )
-//            },
-//    )
 }
 
 class RecipeListScreenUiFactory : Ui.Factory {
