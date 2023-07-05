@@ -36,6 +36,7 @@ class RecipeListPresenter(
 ) : Presenter<RecipeListScreen.RecipeListState> {
 
     @Composable
+    @Suppress("MagicNumber")
     override fun present(): RecipeListScreen.RecipeListState {
         // Here is where we would make a request to get the data we want
         // let's hardcode for now.
