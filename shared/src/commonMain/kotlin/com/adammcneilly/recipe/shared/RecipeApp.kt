@@ -7,6 +7,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.adammcneilly.recipe.shared.ui.bars.RecipeTopAppBar
+import com.adammcneilly.recipe.shared.ui.recipedetail.RecipeDetailScreenPresenterFactory
+import com.adammcneilly.recipe.shared.ui.recipedetail.RecipeDetailScreenUiFactory
 import com.adammcneilly.recipe.shared.ui.recipelist.RecipeListScreen
 import com.adammcneilly.recipe.shared.ui.recipelist.RecipeListScreenPresenterFactory
 import com.adammcneilly.recipe.shared.ui.recipelist.RecipeListScreenUiFactory

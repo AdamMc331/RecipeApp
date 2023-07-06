@@ -3,8 +3,8 @@ package com.adammcneilly.recipe.shared.ui.recipelist
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.adammcneilly.recipe.shared.CommonParcelize
-import com.adammcneilly.recipe.shared.RecipeDetailScreen
 import com.adammcneilly.recipe.shared.ui.displaymodels.RecipeDisplayModel
+import com.adammcneilly.recipe.shared.ui.recipedetail.RecipeDetailScreen
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -50,7 +50,7 @@ class RecipeListPresenter(
         return RecipeListScreen.RecipeListState(recipeList) { event ->
             when (event) {
                 is RecipeListScreen.RecipeListEvent.RecipeClicked -> {
-                    navigator.goTo(RecipeDetailScreen(event.recipe.name))
+                    navigator.goTo(RecipeDetailScreen(event.recipe))
                 }
             }
         }

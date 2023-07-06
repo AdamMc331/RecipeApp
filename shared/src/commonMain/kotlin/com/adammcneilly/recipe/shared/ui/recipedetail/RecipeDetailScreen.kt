@@ -1,4 +1,4 @@
-package com.adammcneilly.recipe.shared
+package com.adammcneilly.recipe.shared.ui.recipedetail
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -6,6 +6,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.adammcneilly.recipe.shared.CommonParcelize
+import com.adammcneilly.recipe.shared.ui.displaymodels.RecipeDisplayModel
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
@@ -20,59 +22,30 @@ import com.slack.circuit.runtime.ui.ui
  */
 @CommonParcelize
 data class RecipeDetailScreen(
-    val initialRecipe: String,
+    val initialRecipe: RecipeDisplayModel,
 ) : Screen {
     data class State(
-        val recipe: String,
+        val recipe: RecipeDisplayModel,
         val eventSink: (Event) -> Unit,
     ) : CircuitUiState
 
-    sealed interface Event : CircuitUiEvent {
-        /**
-         * Go back to the previous screen.
-         */
-        object GoBack : Event
-    }
+    sealed interface Event : CircuitUiEvent
 }
 
 /**
  * State management for the [RecipeDetailScreen].
  */
 class RecipeDetailPresenter(
-    private val initialRecipe: String,
+    private val initialRecipe: RecipeDisplayModel,
     private val navigator: Navigator,
 ) : Presenter<RecipeDetailScreen.State> {
 
     @Composable
     override fun present(): RecipeDetailScreen.State {
-        return RecipeDetailScreen.State(initialRecipe) { event ->
-            when (event) {
-                RecipeDetailScreen.Event.GoBack -> {
-                    navigator.pop()
-                }
-            }
+        return RecipeDetailScreen.State(initialRecipe) {
+            // No Op
         }
     }
-}
-
-/**
- * This is the actual UI to render inside a [RecipeDetailScreen].
- */
-@Composable
-fun RecipeDetailContent(
-    state: RecipeDetailScreen.State,
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        text = "Recipe Detail For: ${state.recipe}",
-        modifier = modifier
-            .padding(32.dp)
-            .clickable {
-                state.eventSink.invoke(
-                    RecipeDetailScreen.Event.GoBack,
-                )
-            },
-    )
 }
 
 /**
@@ -91,12 +64,15 @@ class RecipeDetailScreenUiFactory : Ui.Factory {
     }
 }
 
-private fun recipeDetailUi(initialRecipe: String) = ui<RecipeDetailScreen.State> { state, modifier ->
+private fun recipeDetailUi(initialRecipe: RecipeDisplayModel) = ui<RecipeDetailScreen.State> { state, modifier ->
     val stateToUse = state.copy(
         recipe = initialRecipe,
     )
 
-    RecipeDetailContent(stateToUse, modifier)
+    RecipeDetailContent(
+        recipe = stateToUse.recipe,
+        modifier = modifier,
+    )
 }
 
 /**
