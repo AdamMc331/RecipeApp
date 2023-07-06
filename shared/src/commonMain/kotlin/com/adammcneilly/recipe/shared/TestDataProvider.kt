@@ -4,7 +4,7 @@ import com.adammcneilly.recipe.shared.ui.displaymodels.IngredientAmountDisplayMo
 import com.adammcneilly.recipe.shared.ui.displaymodels.RecipeDisplayModel
 import com.adammcneilly.recipe.shared.ui.displaymodels.RecipeStepDisplayModel
 
-@Suppress("MagicNumber")
+@Suppress("MagicNumber", "MaxLineLength", "LongMethod")
 object TestDataProvider {
 
     fun provideVeggieOmelette(): RecipeDisplayModel {
