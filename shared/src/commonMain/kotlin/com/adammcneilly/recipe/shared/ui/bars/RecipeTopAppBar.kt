@@ -22,7 +22,7 @@ fun RecipeTopAppBar(
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = "Loo-McNeilly Recipes",
+                text = "Recipes",
             )
         },
         navigationIcon = {
