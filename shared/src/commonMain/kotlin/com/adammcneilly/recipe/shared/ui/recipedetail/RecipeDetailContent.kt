@@ -3,6 +3,8 @@ package com.adammcneilly.recipe.shared.ui.recipedetail
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +14,10 @@ import com.adammcneilly.recipe.shared.ui.displaymodels.RecipeDisplayModel
 
 /**
  * This is the actual UI to render inside a [RecipeDetailScreen].
+ *
+ * 1. Step text here
+ *    second line starts here.
+ * 2. Step text here
  */
 @Composable
 fun RecipeDetailContent(
@@ -20,6 +26,7 @@ fun RecipeDetailContent(
 ) {
     Column(
         modifier = modifier
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -29,10 +36,20 @@ fun RecipeDetailContent(
             tags = recipe.tags,
         )
 
-        IngredientsTitle()
+        SectionTitle(
+            text = "Ingredients",
+        )
 
         IngredientListCard(
             ingredients = recipe.ingredients,
+        )
+
+        SectionTitle(
+            text = "Instructions",
+        )
+
+        RecipeStepListCard(
+            steps = recipe.steps,
         )
     }
 }
@@ -46,9 +63,11 @@ private fun RecipeNameTitle(recipe: RecipeDisplayModel) {
 }
 
 @Composable
-private fun IngredientsTitle() {
+private fun SectionTitle(
+    text: String,
+) {
     Text(
-        text = "Ingredients",
+        text = text,
         style = MaterialTheme.typography.titleMedium,
     )
 }

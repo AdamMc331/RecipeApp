@@ -5,4 +5,5 @@ data class RecipeDisplayModel(
     val name: String,
     val tags: List<String>,
     val ingredients: List<IngredientAmountDisplayModel>,
+    val steps: List<RecipeStepDisplayModel>,
 )
