@@ -3,6 +3,7 @@ package com.adammcneilly.recipe.shared.ui.recipelist
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.adammcneilly.recipe.shared.CommonParcelize
+import com.adammcneilly.recipe.shared.TestDataProvider
 import com.adammcneilly.recipe.shared.ui.displaymodels.RecipeDisplayModel
 import com.adammcneilly.recipe.shared.ui.recipedetail.RecipeDetailScreen
 import com.slack.circuit.runtime.CircuitContext
@@ -36,16 +37,10 @@ class RecipeListPresenter(
 ) : Presenter<RecipeListScreen.RecipeListState> {
 
     @Composable
-    @Suppress("MagicNumber")
     override fun present(): RecipeListScreen.RecipeListState {
         // Here is where we would make a request to get the data we want
         // let's hardcode for now.
-        val recipeList = (1..15).map { index ->
-            RecipeDisplayModel(
-                timeFrame = "30 Minutes",
-                name = "Recipe $index",
-            )
-        }
+        val recipeList = TestDataProvider.provideRecipes()
 
         return RecipeListScreen.RecipeListState(recipeList) { event ->
             when (event) {
