@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.30.1"
-activityCompose = "1.7.1"
+activityCompose = "1.8.0"
 androidxTest = "1.1.5"
 appCompat = "1.6.1"
 circuit = "0.9.1-compose-mp"
