@@ -2,7 +2,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    id("org.jetbrains.compose").version("1.4.1")
+    id("org.jetbrains.compose").version("1.5.3")
     id("org.jmailen.kotlinter")
     alias(libs.plugins.kotlin.parcelize)
 }
@@ -23,7 +23,7 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
+//        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     iosX64()
