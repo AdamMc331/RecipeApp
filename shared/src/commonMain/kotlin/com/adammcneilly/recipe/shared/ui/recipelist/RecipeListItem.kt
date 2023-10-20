@@ -16,12 +16,12 @@ fun RecipeListItem(
     modifier: Modifier = Modifier,
 ) {
     ListItem(
-        headlineText = {
+        headlineContent = {
             Text(
                 text = recipe.name,
             )
         },
-        overlineText = {
+        overlineContent = {
             Text(
                 text = recipe.timeFrame,
             )
