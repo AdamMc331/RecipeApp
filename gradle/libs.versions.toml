@@ -17,7 +17,7 @@ kotlinter = "3.14.0"
 ktxCore = "1.12.0"
 leakCanary = "2.12"
 lifecycle = "2.6.2"
-material = "1.10.0"
+material = "1.11.0"
 minSdk = "21"
 
 [libraries]
