@@ -9,7 +9,7 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "template.app.id"
+        applicationId = "com.mcloo.recipes"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.compileSdk.get().toInt()
         versionCode = 1
@@ -47,7 +47,7 @@ android {
         }
     }
 
-    namespace = "template"
+    namespace = "com.mcloo.recipes"
 }
 
 dependencies {

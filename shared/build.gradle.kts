@@ -72,7 +72,7 @@ kotlin {
 
 compose.resources {
     publicResClass = false
-    packageOfResClass = "template.shared"
+    packageOfResClass = "com.mcloo.recipes.shared"
     generateResClass = auto
 }
 
@@ -91,13 +91,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    namespace = "template.shared"
+    namespace = "com.mcloo.recipes.shared"
 }
 
 sqldelight {
     databases {
         create("AppDatabase") {
-            packageName.set("template.shared")
+            packageName.set("com.mcloo.recipes.shared")
         }
     }
 }
@@ -105,7 +105,7 @@ sqldelight {
 // NOTE: Replace the template schema.json with the schema for your apollo api.
 apollo {
     service("service") {
-        packageName.set("template.shared")
+        packageName.set("com.mcloo.recipes.shared")
     }
 }
 
