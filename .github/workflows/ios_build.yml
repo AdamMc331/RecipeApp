@@ -20,8 +20,8 @@ jobs:
       - name: Build
         uses: sersoft-gmbh/xcodebuild-action@v3
         with:
-          project: iosApp/templateIOS.xcodeproj
-          scheme: templateIOS
+          project: iosApp/mclooRecipeIOS.xcodeproj
+          scheme: mclooRecipeIOS
           destination: name=iPhone 8
           sdk: iphoneos
           configuration: Debug
