@@ -1,11 +1,8 @@
 package com.mcloo.recipes.shared
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.mcloo.recipes.shared.theme.RecipeTheme
-import com.mcloo.recipes.shared.ui.components.RecipeListItemCard
+import com.mcloo.recipes.shared.ui.components.RecipeListGrid
 import com.mcloo.recipes.shared.ui.displaymodels.ImageDisplayModel
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeSummaryDisplayModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -14,15 +11,15 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun App() {
     RecipeTheme {
-        RecipeListItemCard(
-            recipe = RecipeSummaryDisplayModel(
-                name = "Spicy Arrabiata Penne",
+        val recipes = List(10) { index ->
+            RecipeSummaryDisplayModel(
+                name = "Spicy Arrabiata Penne: $index",
                 image = ImageDisplayModel.Remote(
                     url = "https://www.themealdb.com/images/media/meals/1520083578.jpg",
                 ),
-            ),
-            modifier = Modifier
-                .padding(16.dp),
-        )
+            )
+        }
+
+        RecipeListGrid(recipes)
     }
 }
