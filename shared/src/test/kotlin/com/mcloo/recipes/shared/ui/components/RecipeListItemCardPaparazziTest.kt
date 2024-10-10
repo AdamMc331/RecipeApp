@@ -11,7 +11,7 @@ class RecipeListItemCardPaparazziTest : BasePaparazziTest() {
     @Test
     fun render() {
         val recipe = RecipeSummaryDisplayModel(
-            name = "Spicy Arrabiata Penne",
+            name = "Oxtail with broad beans",
             image = ImageDisplayModel.Local(
                 Res.drawable.oxtail,
             ),
