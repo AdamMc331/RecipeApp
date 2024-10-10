@@ -1,8 +1,12 @@
 package com.mcloo.recipes.shared
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.mcloo.recipes.shared.data.mealdb.MealDBRecipeService
 import com.mcloo.recipes.shared.theme.RecipeTheme
@@ -16,19 +20,24 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun App() {
     RecipeTheme {
+        var recipes by remember { mutableStateOf(emptyList<RecipeSummaryDisplayModel>()) }
+
         rememberCoroutineScope().launch {
-            MealDBRecipeService().getRecipesByName("Arrabiata")
+            val remoteRecipes = MealDBRecipeService().getRecipesByName("Chicken")
+
+            recipes = remoteRecipes
+                .getOrNull()
+                ?.map { recipe ->
+                    RecipeSummaryDisplayModel(
+                        name = recipe.name,
+                        image = ImageDisplayModel.Remote(recipe.imageUrl),
+                    )
+                }.orEmpty()
         }
 
-        RecipeListItemCard(
-            recipe = RecipeSummaryDisplayModel(
-                name = "Spicy Arrabiata Penne",
-                image = ImageDisplayModel.Remote(
-                    url = "https://www.themealdb.com/images/media/meals/1520083578.jpg",
-                ),
-            )
-        }
-
-        RecipeListGrid(recipes)
+        RecipeListGrid(
+            recipes = recipes,
+            contentPadding = PaddingValues(16.dp),
+        )
     }
 }
