@@ -1,4 +1,4 @@
-package com.mcloo.recipes.shared
+package com.mcloo.recipes.shared.data
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
