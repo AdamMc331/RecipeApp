@@ -16,6 +16,7 @@ class RecipeListGridPaparazziTest : BasePaparazziTest() {
                 image = ImageDisplayModel.Local(
                     Res.drawable.oxtail,
                 ),
+                isFavorite = false,
             )
         }
 
