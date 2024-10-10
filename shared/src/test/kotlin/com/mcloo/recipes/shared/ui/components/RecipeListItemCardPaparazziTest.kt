@@ -9,12 +9,28 @@ import org.junit.Test
 
 class RecipeListItemCardPaparazziTest : BasePaparazziTest() {
     @Test
-    fun render() {
+    fun renderNotFavorite() {
         val recipe = RecipeSummaryDisplayModel(
             name = "Oxtail with broad beans",
             image = ImageDisplayModel.Local(
                 Res.drawable.oxtail,
             ),
+            isFavorite = false,
+        )
+
+        snapshot {
+            RecipeListItemCard(recipe)
+        }
+    }
+
+    @Test
+    fun renderFavorite() {
+        val recipe = RecipeSummaryDisplayModel(
+            name = "Oxtail with broad beans",
+            image = ImageDisplayModel.Local(
+                Res.drawable.oxtail,
+            ),
+            isFavorite = true,
         )
 
         snapshot {

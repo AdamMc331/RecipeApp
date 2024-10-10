@@ -31,8 +31,10 @@ fun App() {
                     RecipeSummaryDisplayModel(
                         name = recipe.name,
                         image = ImageDisplayModel.Remote(recipe.imageUrl),
+                        isFavorite = false,
                     )
                 }.orEmpty()
+
         }
 
         RecipeListGrid(
