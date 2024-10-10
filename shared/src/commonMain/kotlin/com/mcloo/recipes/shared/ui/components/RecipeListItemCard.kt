@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeSummaryDisplayModel
 
 @Composable
@@ -32,8 +31,8 @@ fun RecipeListItemCard(
                 .fillMaxWidth()
                 .aspectRatio(1F),
         ) {
-            AsyncImage(
-                model = recipe.imageUrl,
+            ImageWrapper(
+                image = recipe.image,
                 contentDescription = "${recipe.name} Image",
                 modifier = Modifier
                     .fillMaxSize(),
