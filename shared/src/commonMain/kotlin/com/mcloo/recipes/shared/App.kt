@@ -16,7 +16,7 @@ fun App() {
         RecipeListItemCard(
             recipe = RecipeSummaryDisplayModel(
                 name = "Spicy Arrabiata Penne",
-                imageUrl = "https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg",
+                imageUrl = "https://www.themealdb.com/images/media/meals/1520083578.jpg",
             ),
             modifier = Modifier
                 .padding(16.dp),
