@@ -51,7 +51,7 @@ private fun LocalImage(
     modifier: Modifier = Modifier,
 ) {
     Image(
-        painter = painterResource(image.id),
+        painter = painterResource(image.resource),
         contentDescription = contentDescription,
         modifier = modifier,
     )
