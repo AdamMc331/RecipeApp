@@ -17,6 +17,7 @@ fun App() {
                 image = ImageDisplayModel.Remote(
                     url = "https://www.themealdb.com/images/media/meals/1520083578.jpg",
                 ),
+                isFavorite = false,
             )
         }
 
