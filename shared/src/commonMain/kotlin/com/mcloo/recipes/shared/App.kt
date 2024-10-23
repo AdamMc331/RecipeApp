@@ -34,7 +34,6 @@ fun App() {
                         isFavorite = false,
                     )
                 }.orEmpty()
-
         }
 
         RecipeListGrid(
