@@ -12,6 +12,7 @@ import com.mcloo.recipes.shared.ui.displaymodels.RecipeSummaryDisplayModel
 @Composable
 fun RecipeListGrid(
     recipes: List<RecipeSummaryDisplayModel>,
+    onRecipeClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -24,7 +25,10 @@ fun RecipeListGrid(
     ) {
         items(recipes.size) { index ->
             val recipe = recipes[index]
-            RecipeListItemCard(recipe)
+            RecipeListItemCard(
+                recipe = recipe,
+                onClick = onRecipeClicked,
+            )
         }
     }
 }

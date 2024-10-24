@@ -40,6 +40,9 @@ object RecipeListScreen : Screen {
                         RecipeListGrid(
                             recipes = state.recipes,
                             contentPadding = PaddingValues(16.dp),
+                            onRecipeClicked = { id ->
+                                state.eventSink(Event.RecipeClicked(id))
+                            },
                             modifier = modifier,
                         )
                     }

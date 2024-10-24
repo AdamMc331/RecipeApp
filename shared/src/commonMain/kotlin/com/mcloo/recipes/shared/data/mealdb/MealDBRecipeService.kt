@@ -47,6 +47,7 @@ class MealDBRecipeService(
 
 private fun MealDBMealDTO.toRecipe(): Recipe {
     return Recipe(
+        id = this.idMeal.orEmpty(),
         name = strMeal.orEmpty(),
         imageUrl = strMealThumb.orEmpty(),
         ingredients = this.ingredients(),
