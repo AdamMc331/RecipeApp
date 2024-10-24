@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
 
 plugins {
     alias(libs.plugins.android.library)
@@ -10,6 +11,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlinx.serialization)
+    // TODO: Apply alias somehow
+    id("org.jetbrains.kotlin.plugin.parcelize")
 }
 
 kotlin {
@@ -44,6 +47,7 @@ kotlin {
             implementation(libs.apollo.runtime)
             implementation(libs.cash.sqldelight.coroutines)
             implementation(libs.cash.sqldelight.runtime)
+            implementation(libs.circuit.foundation)
             implementation(libs.coil.compose)
             implementation(libs.coil.ktor)
             implementation(libs.koin.core)
@@ -68,6 +72,23 @@ kotlin {
             implementation(kotlin("test"))
             implementation(libs.google.testparameterinjector)
             implementation(libs.koin.test)
+        }
+    }
+
+    targets.configureEach {
+        val isAndroidTarget = platformType == KotlinPlatformType.androidJvm
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    if (isAndroidTarget) {
+                        freeCompilerArgs.addAll(
+                            "-P",
+                            "plugin:org.jetbrains.kotlin.parcelize:additionalAnnotation" +
+                                "=com.mcloo.recipes.shared.Parcelize",
+                        )
+                    }
+                }
+            }
         }
     }
 }
