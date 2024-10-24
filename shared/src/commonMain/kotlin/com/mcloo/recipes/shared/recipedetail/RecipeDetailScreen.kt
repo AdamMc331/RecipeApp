@@ -15,7 +15,7 @@ import org.koin.core.component.KoinComponent
 
 @Parcelize
 data class RecipeDetailScreen(
-    val id: String,
+    val recipeId: String,
 ) : Screen {
     data class State(
         val recipe: RecipeDetailDisplayModel?,
@@ -57,6 +57,7 @@ data class RecipeDetailScreen(
         ): Presenter<*>? {
             return when (screen) {
                 is RecipeDetailScreen -> RecipeDetailPresenter(
+                    recipeId = screen.recipeId,
                     recipeService = recipeService,
                 )
 

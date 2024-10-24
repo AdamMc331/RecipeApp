@@ -11,6 +11,7 @@ import com.mcloo.recipes.shared.ui.displaymodels.RecipeDetailDisplayModel
 import com.slack.circuit.runtime.presenter.Presenter
 
 class RecipeDetailPresenter(
+    private val recipeId: String,
     private val recipeService: RecipeService,
 ) : Presenter<RecipeDetailScreen.State> {
     @Composable
@@ -18,7 +19,9 @@ class RecipeDetailPresenter(
         var recipe by rememberSaveable { mutableStateOf<RecipeDetailDisplayModel?>(null) }
 
         LaunchedEffect(Unit) {
-            TODO("Look up by ID")
+            recipeService.getRecipeById(recipeId).onSuccess { result ->
+                recipe = RecipeDetailDisplayModel(result)
+            }
         }
 
         return RecipeDetailScreen.State(
