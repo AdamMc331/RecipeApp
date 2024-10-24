@@ -4,4 +4,6 @@ import com.mcloo.recipes.shared.data.models.Recipe
 
 interface RecipeService {
     suspend fun getRecipesByName(name: String): Result<List<Recipe>>
+
+    suspend fun getRecipeById(id: String): Result<Recipe>
 }
