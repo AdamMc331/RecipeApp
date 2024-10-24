@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import app.cash.paparazzi.Paparazzi
 import com.mcloo.recipes.shared.theme.RecipeTheme
 
@@ -16,7 +16,7 @@ import com.mcloo.recipes.shared.theme.RecipeTheme
  */
 fun Paparazzi.snapshotScreen(
     darkTheme: Boolean,
-    screenPaddingDp: Int = 16,
+    screenPadding: Dp,
     content: @Composable () -> Unit,
 ) {
     this.snapshot {
@@ -30,7 +30,7 @@ fun Paparazzi.snapshotScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(screenPaddingDp.dp),
+                        .padding(screenPadding),
                 ) {
                     content()
                 }

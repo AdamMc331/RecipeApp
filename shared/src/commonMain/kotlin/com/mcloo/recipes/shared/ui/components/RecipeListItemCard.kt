@@ -102,7 +102,7 @@ private fun FavoriteButton(
         modifier = modifier
             .padding(8.dp)
             .background(
-                color = Color.Black,
+                color = Color.Black.copy(alpha = 0.5F),
                 shape = RoundedCornerShape(8.dp),
             ),
     ) {

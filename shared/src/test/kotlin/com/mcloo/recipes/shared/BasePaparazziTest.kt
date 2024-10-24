@@ -1,6 +1,8 @@
 package com.mcloo.recipes.shared
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import app.cash.paparazzi.Paparazzi
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
@@ -22,8 +24,14 @@ abstract class BasePaparazziTest {
     /**
      * Validates the supplied [content] in both light and dark theme.
      */
-    fun snapshot(content: @Composable () -> Unit) {
-        paparazzi.snapshotScreen(useDarkTheme) {
+    fun snapshot(
+        screenPadding: Dp = 16.dp,
+        content: @Composable () -> Unit,
+    ) {
+        paparazzi.snapshotScreen(
+            useDarkTheme,
+            screenPadding,
+        ) {
             content()
         }
     }
