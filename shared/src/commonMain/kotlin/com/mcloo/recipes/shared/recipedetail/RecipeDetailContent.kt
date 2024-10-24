@@ -163,7 +163,7 @@ private fun IngredientRow(
         )
 
         Text(
-            text = ingredient.quantity,
+            text = ingredient.measurement,
         )
     }
 }
