@@ -3,6 +3,7 @@ package com.mcloo.recipes.shared.ui.components
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
 import com.mcloo.recipes.shared.ui.displaymodels.ImageDisplayModel
 import org.jetbrains.compose.resources.painterResource
@@ -12,12 +13,14 @@ fun ImageWrapper(
     image: ImageDisplayModel,
     contentDescription: String?,
     modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Fit,
 ) {
     when (image) {
         is ImageDisplayModel.Local -> {
             LocalImage(
                 image = image,
                 contentDescription = contentDescription,
+                contentScale = contentScale,
                 modifier = modifier,
             )
         }
@@ -25,6 +28,7 @@ fun ImageWrapper(
             RemoteImage(
                 image = image,
                 contentDescription = contentDescription,
+                contentScale = contentScale,
                 modifier = modifier,
             )
         }
@@ -35,11 +39,13 @@ fun ImageWrapper(
 private fun RemoteImage(
     image: ImageDisplayModel.Remote,
     contentDescription: String?,
-    modifier: Modifier = Modifier,
+    contentScale: ContentScale,
+    modifier: Modifier,
 ) {
     AsyncImage(
         model = image.url,
         contentDescription = contentDescription,
+        contentScale = contentScale,
         modifier = modifier,
     )
 }
@@ -48,11 +54,13 @@ private fun RemoteImage(
 private fun LocalImage(
     image: ImageDisplayModel.Local,
     contentDescription: String?,
-    modifier: Modifier = Modifier,
+    contentScale: ContentScale,
+    modifier: Modifier,
 ) {
     Image(
         painter = painterResource(image.resource),
         contentDescription = contentDescription,
+        contentScale = contentScale,
         modifier = modifier,
     )
 }
