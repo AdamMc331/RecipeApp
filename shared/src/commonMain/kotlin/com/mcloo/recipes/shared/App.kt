@@ -6,7 +6,6 @@ import com.mcloo.recipes.shared.theme.RecipeTheme
 import com.slack.circuit.backstack.rememberSaveableBackStack
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.NavigableCircuitContent
-import com.slack.circuit.foundation.rememberCircuitNavigator
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
@@ -16,7 +15,7 @@ fun App() {
         CircuitCompositionLocals(circuitConfig) {
             val backStack = rememberSaveableBackStack(root = RecipeListScreen)
 
-            val navigator = rememberCircuitNavigator(
+            val navigator = provideCircuitNavigator(
                 backStack = backStack,
                 onRootPop = { result ->
                     // TODO: Handle result
