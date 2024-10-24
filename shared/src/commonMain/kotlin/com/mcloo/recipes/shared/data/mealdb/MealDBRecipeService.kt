@@ -4,8 +4,6 @@ import com.mcloo.recipes.shared.data.BaseKtorClient
 import com.mcloo.recipes.shared.data.RecipeService
 import com.mcloo.recipes.shared.data.models.Ingredient
 import com.mcloo.recipes.shared.data.models.Recipe
-import kotlin.text.get
-import kotlin.text.orEmpty
 
 class MealDBRecipeService(
     private val apiClient: BaseKtorClient = MealDBKtorClient,

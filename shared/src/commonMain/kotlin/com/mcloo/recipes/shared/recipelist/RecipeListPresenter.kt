@@ -21,6 +21,7 @@ class RecipeListPresenter(
         var recipes by remember { mutableStateOf(emptyList<RecipeSummaryDisplayModel>()) }
 
         LaunchedEffect(Unit) {
+            // TODO: Add error handling
             recipeService.getRecipesByName("chicken").onSuccess { result ->
                 recipes = result.map(::RecipeSummaryDisplayModel)
             }
