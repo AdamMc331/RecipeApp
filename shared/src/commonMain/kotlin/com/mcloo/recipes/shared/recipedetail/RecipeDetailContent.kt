@@ -27,6 +27,8 @@ import com.mcloo.recipes.shared.ui.components.ImageWrapper
 import com.mcloo.recipes.shared.ui.displaymodels.IngredientDisplayModel
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeDetailDisplayModel
 
+private const val RECIPE_HEADER_ASPECT_RATIO = 1.5F
+
 @Composable
 fun RecipeDetailContent(
     recipe: RecipeDetailDisplayModel,
@@ -68,7 +70,7 @@ private fun RecipeDetailHeader(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .aspectRatio(1.5F),
+            .aspectRatio(RECIPE_HEADER_ASPECT_RATIO),
     ) {
         ImageWrapper(
             image = recipe.image,
