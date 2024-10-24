@@ -21,15 +21,15 @@ class RecipeDetailContentPaparazziTest : BasePaparazziTest() {
             ingredients = listOf(
                 IngredientDisplayModel(
                     name = "Oxtail",
-                    quantity = "450g",
+                    measurement = "450g",
                 ),
                 IngredientDisplayModel(
                     name = "Onions",
-                    quantity = "1 chopped",
+                    measurement = "1 chopped",
                 ),
                 IngredientDisplayModel(
                     name = "Spring Onions",
-                    quantity = "1",
+                    measurement = "1",
                 ),
             ),
         )
