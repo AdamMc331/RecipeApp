@@ -11,6 +11,7 @@ class RecipeListItemCardPaparazziTest : BasePaparazziTest() {
     @Test
     fun renderNotFavorite() {
         val recipe = RecipeSummaryDisplayModel(
+            id = "123",
             name = "Oxtail with broad beans",
             image = ImageDisplayModel.Local(
                 Res.drawable.oxtail,
@@ -19,13 +20,17 @@ class RecipeListItemCardPaparazziTest : BasePaparazziTest() {
         )
 
         snapshot {
-            RecipeListItemCard(recipe)
+            RecipeListItemCard(
+                recipe = recipe,
+                onClick = {},
+            )
         }
     }
 
     @Test
     fun renderFavorite() {
         val recipe = RecipeSummaryDisplayModel(
+            id = "123",
             name = "Oxtail with broad beans",
             image = ImageDisplayModel.Local(
                 Res.drawable.oxtail,
@@ -34,7 +39,10 @@ class RecipeListItemCardPaparazziTest : BasePaparazziTest() {
         )
 
         snapshot {
-            RecipeListItemCard(recipe)
+            RecipeListItemCard(
+                recipe = recipe,
+                onClick = {},
+            )
         }
     }
 }
