@@ -28,4 +28,18 @@ class RecipeListGridPaparazziTest : BasePaparazziTest() {
             )
         }
     }
+
+    @Test
+    fun renderPlaceholders() {
+        val recipes = List(10) { _ ->
+            RecipeSummaryDisplayModel.PLACEHOLDER
+        }
+
+        snapshot {
+            RecipeListGrid(
+                recipes = recipes,
+                onRecipeClicked = {},
+            )
+        }
+    }
 }

@@ -8,6 +8,7 @@ data class RecipeDetailDisplayModel(
     val image: ImageDisplayModel,
     val isFavorite: Boolean,
     val ingredients: List<IngredientDisplayModel>,
+    val isPlaceholder: Boolean = false,
 ) {
     constructor(recipe: Recipe) : this(
         id = recipe.id,
@@ -21,4 +22,15 @@ data class RecipeDetailDisplayModel(
             )
         },
     )
+
+    companion object {
+        val PLACEHOLDER = RecipeDetailDisplayModel(
+            id = "",
+            name = "",
+            image = ImageDisplayModel.Placeholder,
+            isFavorite = false,
+            ingredients = emptyList(),
+            isPlaceholder = true,
+        )
+    }
 }

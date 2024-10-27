@@ -10,4 +10,6 @@ sealed interface ImageDisplayModel {
     data class Local(
         val resource: DrawableResource,
     ) : ImageDisplayModel
+
+    data object Placeholder : ImageDisplayModel
 }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,36 +32,33 @@ private const val RECIPE_HEADER_ASPECT_RATIO = 1.5F
 
 @Composable
 fun RecipeDetailContent(
-    recipe: RecipeDetailDisplayModel?,
+    recipe: RecipeDetailDisplayModel,
     modifier: Modifier = Modifier,
 ) {
-    // TODO: Do not allow null, instead create a placeholder of sorts.
-    if (recipe == null) {
-        return
-    }
-
     Column(
         modifier = modifier,
     ) {
         RecipeDetailHeader(recipe)
 
-        LazyColumn(
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = modifier,
-        ) {
-            if (recipe.ingredients.isNotEmpty()) {
-                item {
-                    Text(
-                        text = "Ingredients",
-                        style = MaterialTheme.typography.titleLarge,
-                    )
-                }
+        Surface {
+            LazyColumn(
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = modifier,
+            ) {
+                if (recipe.ingredients.isNotEmpty()) {
+                    item {
+                        Text(
+                            text = "Ingredients",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    }
 
-                item {
-                    IngredientListCard(
-                        ingredients = recipe.ingredients,
-                    )
+                    item {
+                        IngredientListCard(
+                            ingredients = recipe.ingredients,
+                        )
+                    }
                 }
             }
         }

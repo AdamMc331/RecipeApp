@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -57,15 +57,17 @@ fun RecipeListItemCard(
                     .align(Alignment.BottomStart),
             )
 
-            FavoriteButton(
-                onClick = {
-                    // Handle favorite click,
-                },
-                isFavorite = recipe.isFavorite,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.TopEnd),
-            )
+            if (!recipe.isPlaceholder) {
+                FavoriteButton(
+                    onClick = {
+                        // Handle favorite click,
+                    },
+                    isFavorite = recipe.isFavorite,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.TopEnd),
+                )
+            }
         }
     }
 }
@@ -75,21 +77,23 @@ private fun RecipeName(
     name: String,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = name,
-        style = MaterialTheme.typography.titleLarge,
-        color = Color.White,
-        modifier = modifier
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color.Transparent,
-                        Color.Black,
+    if (name.isNotBlank()) {
+        Text(
+            text = name,
+            style = MaterialTheme.typography.titleLarge,
+            color = Color.White,
+            modifier = modifier
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color.Black,
+                        ),
                     ),
-                ),
-            ).fillMaxWidth()
-            .padding(16.dp),
-    )
+                ).fillMaxWidth()
+                .padding(16.dp),
+        )
+    }
 }
 
 @Composable
@@ -106,12 +110,10 @@ private fun FavoriteButton(
 
     IconButton(
         onClick = onClick,
-        modifier = modifier
-            .padding(8.dp)
-            .background(
-                color = Color.Black.copy(alpha = 0.5F),
-                shape = RoundedCornerShape(8.dp),
-            ),
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Color.Black.copy(alpha = 0.5F),
+        ),
+        modifier = modifier,
     ) {
         Icon(
             imageVector = icon,

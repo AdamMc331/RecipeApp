@@ -1,6 +1,9 @@
 package com.mcloo.recipes.shared.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -29,6 +32,11 @@ fun ImageWrapper(
                 image = image,
                 contentDescription = contentDescription,
                 contentScale = contentScale,
+                modifier = modifier,
+            )
+        }
+        is ImageDisplayModel.Placeholder -> {
+            PlaceholderImage(
                 modifier = modifier,
             )
         }
@@ -62,5 +70,15 @@ private fun LocalImage(
         contentDescription = contentDescription,
         contentScale = contentScale,
         modifier = modifier,
+    )
+}
+
+@Composable
+private fun PlaceholderImage(modifier: Modifier) {
+    Box(
+        modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.surfaceDim,
+            ),
     )
 }
