@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -106,12 +106,10 @@ private fun FavoriteButton(
 
     IconButton(
         onClick = onClick,
-        modifier = modifier
-            .padding(8.dp)
-            .background(
-                color = Color.Black.copy(alpha = 0.5F),
-                shape = RoundedCornerShape(8.dp),
-            ),
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Color.Black.copy(alpha = 0.5F),
+        ),
+        modifier = modifier,
     ) {
         Icon(
             imageVector = icon,
