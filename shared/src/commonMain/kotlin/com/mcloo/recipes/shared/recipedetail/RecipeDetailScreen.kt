@@ -18,7 +18,7 @@ data class RecipeDetailScreen(
     val recipeId: String,
 ) : Screen {
     data class State(
-        val recipe: RecipeDetailDisplayModel?,
+        val recipe: RecipeDetailDisplayModel,
         val eventSink: (Event) -> Unit,
     ) : CircuitUiState
 

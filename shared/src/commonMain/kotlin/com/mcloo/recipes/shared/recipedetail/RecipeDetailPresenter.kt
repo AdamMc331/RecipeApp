@@ -16,7 +16,7 @@ class RecipeDetailPresenter(
 ) : Presenter<RecipeDetailScreen.State> {
     @Composable
     override fun present(): RecipeDetailScreen.State {
-        var recipe by remember { mutableStateOf<RecipeDetailDisplayModel?>(null) }
+        var recipe by remember { mutableStateOf(RecipeDetailDisplayModel.PLACEHOLDER) }
 
         LaunchedEffect(Unit) {
             recipeService.getRecipeById(recipeId).onSuccess { result ->

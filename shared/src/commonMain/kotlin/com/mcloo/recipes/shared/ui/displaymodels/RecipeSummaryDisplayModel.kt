@@ -7,6 +7,7 @@ data class RecipeSummaryDisplayModel(
     val name: String,
     val image: ImageDisplayModel,
     val isFavorite: Boolean,
+    val isPlaceholder: Boolean = false,
 ) {
     constructor(recipe: Recipe) : this(
         id = recipe.id,
@@ -14,4 +15,13 @@ data class RecipeSummaryDisplayModel(
         image = ImageDisplayModel.Remote(recipe.imageUrl),
         isFavorite = false,
     )
+
+    companion object {
+        val PLACEHOLDER = RecipeSummaryDisplayModel(
+            id = "",
+            name = "",
+            image = ImageDisplayModel.Placeholder,
+            isFavorite = false,
+        )
+    }
 }

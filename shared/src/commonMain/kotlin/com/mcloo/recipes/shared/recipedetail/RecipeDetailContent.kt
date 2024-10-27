@@ -32,14 +32,9 @@ private const val RECIPE_HEADER_ASPECT_RATIO = 1.5F
 
 @Composable
 fun RecipeDetailContent(
-    recipe: RecipeDetailDisplayModel?,
+    recipe: RecipeDetailDisplayModel,
     modifier: Modifier = Modifier,
 ) {
-    // TODO: Do not allow null, instead create a placeholder of sorts.
-    if (recipe == null) {
-        return
-    }
-
     Column(
         modifier = modifier,
     ) {

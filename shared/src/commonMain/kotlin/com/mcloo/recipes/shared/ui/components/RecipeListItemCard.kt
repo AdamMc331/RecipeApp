@@ -57,15 +57,17 @@ fun RecipeListItemCard(
                     .align(Alignment.BottomStart),
             )
 
-            FavoriteButton(
-                onClick = {
-                    // Handle favorite click,
-                },
-                isFavorite = recipe.isFavorite,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.TopEnd),
-            )
+            if (!recipe.isPlaceholder) {
+                FavoriteButton(
+                    onClick = {
+                        // Handle favorite click,
+                    },
+                    isFavorite = recipe.isFavorite,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.TopEnd),
+                )
+            }
         }
     }
 }

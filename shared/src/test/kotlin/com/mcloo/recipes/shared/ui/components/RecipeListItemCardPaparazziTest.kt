@@ -45,4 +45,16 @@ class RecipeListItemCardPaparazziTest : BasePaparazziTest() {
             )
         }
     }
+
+    @Test
+    fun renderPlaceholder() {
+        val recipe = RecipeSummaryDisplayModel.PLACEHOLDER
+
+        snapshot {
+            RecipeListItemCard(
+                recipe = recipe,
+                onClick = {},
+            )
+        }
+    }
 }
