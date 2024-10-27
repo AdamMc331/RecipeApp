@@ -22,6 +22,7 @@ data class RecipeSummaryDisplayModel(
             name = "",
             image = ImageDisplayModel.Placeholder,
             isFavorite = false,
+            isPlaceholder = true,
         )
     }
 }

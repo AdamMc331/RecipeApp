@@ -77,21 +77,23 @@ private fun RecipeName(
     name: String,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = name,
-        style = MaterialTheme.typography.titleLarge,
-        color = Color.White,
-        modifier = modifier
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color.Transparent,
-                        Color.Black,
+    if (name.isNotBlank()) {
+        Text(
+            text = name,
+            style = MaterialTheme.typography.titleLarge,
+            color = Color.White,
+            modifier = modifier
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color.Black,
+                        ),
                     ),
-                ),
-            ).fillMaxWidth()
-            .padding(16.dp),
-    )
+                ).fillMaxWidth()
+                .padding(16.dp),
+        )
+    }
 }
 
 @Composable
