@@ -12,6 +12,7 @@ class RecipeListGridPaparazziTest : BasePaparazziTest() {
     fun render() {
         val recipes = List(10) { index ->
             RecipeSummaryDisplayModel(
+                id = "123",
                 name = "Oxtail with broad beans",
                 image = ImageDisplayModel.Local(
                     Res.drawable.oxtail,
@@ -21,7 +22,10 @@ class RecipeListGridPaparazziTest : BasePaparazziTest() {
         }
 
         snapshot {
-            RecipeListGrid(recipes)
+            RecipeListGrid(
+                recipes = recipes,
+                onRecipeClicked = {},
+            )
         }
     }
 }

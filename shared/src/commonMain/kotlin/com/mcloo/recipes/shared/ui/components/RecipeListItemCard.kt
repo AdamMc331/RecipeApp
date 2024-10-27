@@ -1,6 +1,7 @@
 package com.mcloo.recipes.shared.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,11 +27,17 @@ import com.mcloo.recipes.shared.ui.displaymodels.RecipeSummaryDisplayModel
 @Composable
 fun RecipeListItemCard(
     recipe: RecipeSummaryDisplayModel,
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
         shape = MaterialTheme.shapes.large,
-        modifier = modifier,
+        modifier = modifier
+            .clickable(
+                onClick = {
+                    onClick(recipe.id)
+                },
+            ),
     ) {
         Box(
             modifier = Modifier

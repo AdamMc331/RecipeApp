@@ -13,6 +13,7 @@ class RecipeDetailContentPaparazziTest : BasePaparazziTest() {
     @Test
     fun renderDefault() {
         val recipe = RecipeDetailDisplayModel(
+            id = "123",
             name = "Oxtail with broad beans",
             image = ImageDisplayModel.Local(
                 Res.drawable.oxtail,
