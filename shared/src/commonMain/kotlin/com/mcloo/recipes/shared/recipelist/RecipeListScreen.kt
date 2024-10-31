@@ -16,6 +16,7 @@ import org.koin.core.component.KoinComponent
 @Parcelize
 object RecipeListScreen : Screen {
     data class State(
+        val searchQuery: String,
         val recipes: List<RecipeSummaryDisplayModel>,
         val eventSink: (Event) -> Unit,
     ) : CircuitUiState
@@ -23,6 +24,10 @@ object RecipeListScreen : Screen {
     sealed interface Event : CircuitUiEvent {
         data class RecipeClicked(
             val id: String,
+        ) : Event
+
+        data class SearchQueryChanged(
+            val searchQuery: String,
         ) : Event
     }
 
@@ -35,7 +40,10 @@ object RecipeListScreen : Screen {
                 RecipeListScreen -> {
                     ui<State> { state, modifier ->
                         RecipeListContent(
-                            searchQuery = "Chicken",
+                            searchQuery = state.searchQuery,
+                            onSearchQueryChanged = { searchQuery ->
+                                state.eventSink(Event.SearchQueryChanged(searchQuery))
+                            },
                             recipes = state.recipes,
                             onRecipeClicked = { id ->
                                 state.eventSink(Event.RecipeClicked(id))

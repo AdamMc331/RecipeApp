@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,6 +18,7 @@ import com.mcloo.recipes.shared.ui.displaymodels.RecipeSummaryDisplayModel
 @Composable
 fun RecipeListContent(
     searchQuery: String,
+    onSearchQueryChanged: (String) -> Unit,
     recipes: List<RecipeSummaryDisplayModel>,
     onRecipeClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -28,8 +30,13 @@ fun RecipeListContent(
     ) {
         OutlinedTextField(
             value = searchQuery,
-            onValueChange = {},
+            onValueChange = onSearchQueryChanged,
             shape = RoundedCornerShape(50),
+            placeholder = {
+                Text(
+                    text = "Search",
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(

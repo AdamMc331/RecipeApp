@@ -18,6 +18,7 @@ class RecipeListPresenter(
 ) : Presenter<RecipeListScreen.State> {
     @Composable
     override fun present(): RecipeListScreen.State {
+        var searchQuery by remember { mutableStateOf("") }
         var recipes by remember { mutableStateOf(emptyList<RecipeSummaryDisplayModel>()) }
 
         LaunchedEffect(Unit) {
@@ -28,12 +29,17 @@ class RecipeListPresenter(
         }
 
         return RecipeListScreen.State(
+            searchQuery = searchQuery,
             recipes = recipes,
         ) { event ->
             when (event) {
                 is RecipeListScreen.Event.RecipeClicked -> {
                     val screen = RecipeDetailScreen(event.id)
                     navigator.goTo(screen)
+                }
+
+                is RecipeListScreen.Event.SearchQueryChanged -> {
+                    searchQuery = event.searchQuery
                 }
             }
         }
