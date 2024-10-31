@@ -1,11 +1,17 @@
 package com.mcloo.recipes.shared
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.cash.paparazzi.Paparazzi
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
+import com.mcloo.recipes.shared.theme.RecipeTheme
 import org.junit.Rule
 import org.junit.runner.RunWith
 
@@ -16,7 +22,7 @@ import org.junit.runner.RunWith
 @RunWith(TestParameterInjector::class)
 abstract class BasePaparazziTest {
     @get:Rule
-    val paparazzi = Paparazzi()
+    val _paparazzi = Paparazzi()
 
     @TestParameter
     val useDarkTheme: Boolean = false
@@ -28,11 +34,23 @@ abstract class BasePaparazziTest {
         screenPadding: Dp = 16.dp,
         content: @Composable () -> Unit,
     ) {
-        paparazzi.snapshotScreen(
-            useDarkTheme,
-            screenPadding,
-        ) {
-            content()
+        _paparazzi.snapshot {
+            RecipeTheme(
+                darkTheme = useDarkTheme,
+            ) {
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(screenPadding),
+                    ) {
+                        content()
+                    }
+                }
+            }
         }
     }
 }
