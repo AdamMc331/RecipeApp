@@ -1,10 +1,7 @@
 package com.mcloo.recipes.shared.recipelist
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.ui.unit.dp
 import com.mcloo.recipes.shared.Parcelize
 import com.mcloo.recipes.shared.data.mealdb.MealDBRecipeService
-import com.mcloo.recipes.shared.ui.components.RecipeListGrid
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeSummaryDisplayModel
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.CircuitUiEvent
@@ -19,6 +16,7 @@ import org.koin.core.component.KoinComponent
 @Parcelize
 object RecipeListScreen : Screen {
     data class State(
+        val searchQuery: String,
         val recipes: List<RecipeSummaryDisplayModel>,
         val eventSink: (Event) -> Unit,
     ) : CircuitUiState
@@ -26,6 +24,10 @@ object RecipeListScreen : Screen {
     sealed interface Event : CircuitUiEvent {
         data class RecipeClicked(
             val id: String,
+        ) : Event
+
+        data class SearchQueryChanged(
+            val searchQuery: String,
         ) : Event
     }
 
@@ -37,9 +39,12 @@ object RecipeListScreen : Screen {
             return when (screen) {
                 RecipeListScreen -> {
                     ui<State> { state, modifier ->
-                        RecipeListGrid(
+                        RecipeListContent(
+                            searchQuery = state.searchQuery,
+                            onSearchQueryChanged = { searchQuery ->
+                                state.eventSink(Event.SearchQueryChanged(searchQuery))
+                            },
                             recipes = state.recipes,
-                            contentPadding = PaddingValues(16.dp),
                             onRecipeClicked = { id ->
                                 state.eventSink(Event.RecipeClicked(id))
                             },
