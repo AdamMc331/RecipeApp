@@ -11,12 +11,20 @@ import kotlinx.coroutines.launch
 
 /**
  * Inspiration: https://mohammedev.hashnode.dev/usedebounce-in-androids-jetpack-compose
+ *
+ * This is a helper extension function that will debounce changes to a Compose state property.
+ *
+ * It will run a delay for the supplied [delayMillis], and if this property remains
+ * unchanged during that time, it will trigger the [onChange] callback.
+ *
+ * If the property does change within the [delayMillis], the job is cancelled and a callback
+ * will not occur.
  */
 @Composable
 fun <T> T.useDebounce(
     delayMillis: Long = 300L,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onChange: (T) -> Unit,
+    onChange: suspend (T) -> Unit,
 ): T {
     val state by rememberUpdatedState(this)
 
