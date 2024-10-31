@@ -61,6 +61,13 @@ fun RecipeDetailContent(
         expandedToolbarHeight + toolbarOffsetHeightPx.value.toDp()
     }
 
+    // Compare toolbarHeightDp to expandedToolbarHeight
+    // Using this ratio, we can determine how much the user scrolled,
+    // and use that to scale up/down images or text.
+    val scrollDifference = (expandedToolbarHeight - collapsedToolbarHeight)
+    val ratio = (toolbarHeightDp - collapsedToolbarHeight) / scrollDifference
+    println("ADAMLOG - RATIO: $ratio")
+
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(
