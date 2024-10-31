@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
@@ -31,12 +30,10 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.mcloo.recipes.shared.ui.components.ImageWrapper
 import com.mcloo.recipes.shared.ui.displaymodels.IngredientDisplayModel
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeDetailDisplayModel
-import kotlin.math.roundToInt
 
 private const val RECIPE_HEADER_ASPECT_RATIO = 1.5F
 
@@ -57,6 +54,11 @@ fun RecipeDetailContent(
 
     val toolbarOffsetHeightPx = remember {
         mutableStateOf(0f)
+    }
+
+    val toolbarHeightDp = with(LocalDensity.current) {
+        println("ADAMLOG - OFFSET: $toolbarOffsetHeightPx")
+        expandedToolbarHeight + toolbarOffsetHeightPx.value.toDp()
     }
 
     val nestedScrollConnection = remember {
@@ -85,14 +87,13 @@ fun RecipeDetailContent(
         ) {
             RecipeInformationList(
                 recipe = recipe,
-                contentPadding = PaddingValues(top = expandedToolbarHeight),
+                contentPadding = PaddingValues(top = toolbarHeightDp),
             )
 
             RecipeDetailHeader(
                 recipe = recipe,
                 modifier = Modifier
-                    .height(expandedToolbarHeight)
-                    .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt()) },
+                    .height(toolbarHeightDp),
             )
         }
     }
