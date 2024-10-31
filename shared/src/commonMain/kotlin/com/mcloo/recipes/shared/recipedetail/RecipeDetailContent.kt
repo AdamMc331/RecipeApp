@@ -7,9 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
@@ -18,15 +19,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.mcloo.recipes.shared.ui.components.ImageWrapper
 import com.mcloo.recipes.shared.ui.displaymodels.IngredientDisplayModel
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeDetailDisplayModel
+import kotlin.math.roundToInt
 
 private const val RECIPE_HEADER_ASPECT_RATIO = 1.5F
 
@@ -35,31 +45,72 @@ fun RecipeDetailContent(
     recipe: RecipeDetailDisplayModel,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    val toolbarHeight = 48.dp
+    val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
+    val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
+
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(
+                available: Offset,
+                source: NestedScrollSource,
+            ): Offset {
+                val delta = available.y
+                println("ADAMLOG - DELTA: $delta")
+                val newOffset = toolbarOffsetHeightPx.value + delta
+                toolbarOffsetHeightPx.value = newOffset.coerceIn(-toolbarHeightPx, 0f)
+
+                // Watch the scroll, but don't do anything,
+                // so the lazy column still scrolls normally.
+                return Offset.Zero
+            }
+        }
+    }
+
+    Surface {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .nestedScroll(nestedScrollConnection),
+        ) {
+            RecipeInformationList(
+                recipe = recipe,
+                contentPadding = PaddingValues(top = toolbarHeight),
+            )
+
+            RecipeDetailHeader(
+                recipe = recipe,
+                modifier = Modifier
+                    .height(toolbarHeight)
+                    .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt()) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun RecipeInformationList(
+    recipe: RecipeDetailDisplayModel,
+    contentPadding: PaddingValues,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        contentPadding = contentPadding,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier,
     ) {
-        RecipeDetailHeader(recipe)
+        if (recipe.ingredients.isNotEmpty()) {
+            item {
+                Text(
+                    text = "Ingredients",
+                    style = MaterialTheme.typography.titleLarge,
+                )
+            }
 
-        Surface {
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = modifier,
-            ) {
-                if (recipe.ingredients.isNotEmpty()) {
-                    item {
-                        Text(
-                            text = "Ingredients",
-                            style = MaterialTheme.typography.titleLarge,
-                        )
-                    }
-
-                    item {
-                        IngredientListCard(
-                            ingredients = recipe.ingredients,
-                        )
-                    }
-                }
+            item {
+                IngredientListCard(
+                    ingredients = recipe.ingredients,
+                )
             }
         }
     }
@@ -72,8 +123,8 @@ private fun RecipeDetailHeader(
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(RECIPE_HEADER_ASPECT_RATIO),
+            .fillMaxWidth(),
+//            .aspectRatio(RECIPE_HEADER_ASPECT_RATIO),
     ) {
         ImageWrapper(
             image = recipe.image,
