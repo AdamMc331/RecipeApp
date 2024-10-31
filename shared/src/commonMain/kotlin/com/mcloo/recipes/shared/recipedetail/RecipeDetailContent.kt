@@ -45,9 +45,19 @@ fun RecipeDetailContent(
     recipe: RecipeDetailDisplayModel,
     modifier: Modifier = Modifier,
 ) {
-    val toolbarHeight = 48.dp
-    val toolbarHeightPx = with(LocalDensity.current) { toolbarHeight.roundToPx().toFloat() }
-    val toolbarOffsetHeightPx = remember { mutableStateOf(0f) }
+    val expandedToolbarHeight = 192.dp
+    val expandedToolbarHeightPx = with(LocalDensity.current) {
+        expandedToolbarHeight.roundToPx().toFloat()
+    }
+
+    val collapsedToolbarHeight = 56.dp
+    val collapsedToolbarHeightPx = with(LocalDensity.current) {
+        collapsedToolbarHeight.roundToPx().toFloat()
+    }
+
+    val toolbarOffsetHeightPx = remember {
+        mutableStateOf(0f)
+    }
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -56,9 +66,9 @@ fun RecipeDetailContent(
                 source: NestedScrollSource,
             ): Offset {
                 val delta = available.y
-                println("ADAMLOG - DELTA: $delta")
                 val newOffset = toolbarOffsetHeightPx.value + delta
-                toolbarOffsetHeightPx.value = newOffset.coerceIn(-toolbarHeightPx, 0f)
+                val minOffset = -expandedToolbarHeightPx + collapsedToolbarHeightPx
+                toolbarOffsetHeightPx.value = newOffset.coerceIn(minOffset, 0f)
 
                 // Watch the scroll, but don't do anything,
                 // so the lazy column still scrolls normally.
@@ -75,13 +85,13 @@ fun RecipeDetailContent(
         ) {
             RecipeInformationList(
                 recipe = recipe,
-                contentPadding = PaddingValues(top = toolbarHeight),
+                contentPadding = PaddingValues(top = expandedToolbarHeight),
             )
 
             RecipeDetailHeader(
                 recipe = recipe,
                 modifier = Modifier
-                    .height(toolbarHeight)
+                    .height(expandedToolbarHeight)
                     .offset { IntOffset(x = 0, y = toolbarOffsetHeightPx.value.roundToInt()) },
             )
         }
