@@ -1,10 +1,7 @@
 package com.mcloo.recipes.shared.recipelist
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.ui.unit.dp
 import com.mcloo.recipes.shared.Parcelize
 import com.mcloo.recipes.shared.data.mealdb.MealDBRecipeService
-import com.mcloo.recipes.shared.ui.components.RecipeListGrid
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeSummaryDisplayModel
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.CircuitUiEvent
@@ -37,9 +34,9 @@ object RecipeListScreen : Screen {
             return when (screen) {
                 RecipeListScreen -> {
                     ui<State> { state, modifier ->
-                        RecipeListGrid(
+                        RecipeListContent(
+                            searchQuery = "Chicken",
                             recipes = state.recipes,
-                            contentPadding = PaddingValues(16.dp),
                             onRecipeClicked = { id ->
                                 state.eventSink(Event.RecipeClicked(id))
                             },
