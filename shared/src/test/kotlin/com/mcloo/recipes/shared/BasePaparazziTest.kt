@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 @RunWith(TestParameterInjector::class)
 abstract class BasePaparazziTest {
     @get:Rule
+    @Suppress("ktlint:standard:backing-property-naming")
     val _paparazzi = Paparazzi()
 
     @TestParameter
