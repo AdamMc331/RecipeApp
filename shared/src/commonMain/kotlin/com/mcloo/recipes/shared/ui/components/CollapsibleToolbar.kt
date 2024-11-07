@@ -21,9 +21,9 @@ object CollapsibleToolbar {
 }
 
 data class CollapsibleToolbarState(
-    val toolbarHeightDp: Dp,
-    val scrollRatio: Float,
-    val nestedScrollConnection: NestedScrollConnection,
+    val toolbarHeightDp: Dp = EXPANDED_TOOLBAR_HEIGHT,
+    val scrollRatio: Float = 1F,
+    val nestedScrollConnection: NestedScrollConnection = object : NestedScrollConnection {},
 )
 
 @Composable
