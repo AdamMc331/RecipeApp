@@ -4,11 +4,14 @@ import com.mcloo.recipes.shared.data.BaseKtorClient
 import com.mcloo.recipes.shared.data.RecipeService
 import com.mcloo.recipes.shared.data.models.Ingredient
 import com.mcloo.recipes.shared.data.models.Recipe
+import kotlinx.coroutines.delay
 
 class MealDBRecipeService(
     private val apiClient: BaseKtorClient = MealDBKtorClient,
 ) : RecipeService {
     override suspend fun getRecipesByName(name: String): Result<List<Recipe>> {
+        delay(2_000)
+
         val recipeListResult = apiClient.getResponse<MealDBRecipeListDTO>(
             endpoint = "/search.php",
             params = mapOf("s" to name),

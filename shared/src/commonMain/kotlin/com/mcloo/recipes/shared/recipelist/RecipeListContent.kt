@@ -1,5 +1,6 @@
 package com.mcloo.recipes.shared.recipelist
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +44,15 @@ fun RecipeListContent(
                 .fillMaxWidth()
                 .padding(16.dp),
         )
+
+        AnimatedVisibility(
+            visible = showLoading,
+        ) {
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth(),
+            )
+        }
 
         RecipeListGrid(
             recipes = recipes,
