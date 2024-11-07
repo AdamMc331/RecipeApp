@@ -31,6 +31,7 @@ import com.mcloo.recipes.shared.ui.components.ImageWrapper
 import com.mcloo.recipes.shared.ui.components.rememberCollapsibleToolbarState
 import com.mcloo.recipes.shared.ui.displaymodels.IngredientDisplayModel
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeDetailDisplayModel
+import com.mcloo.recipes.shared.ui.utils.plus
 
 @Composable
 fun RecipeDetailContent(
@@ -46,7 +47,9 @@ fun RecipeDetailContent(
         ) {
             RecipeInformationList(
                 recipe = recipe,
-                contentPadding = PaddingValues(top = collapsibleToolbarState.toolbarHeightDp),
+                contentPadding = PaddingValues(
+                    top = collapsibleToolbarState.toolbarHeightDp,
+                ) + PaddingValues(16.dp),
             )
 
             RecipeDetailHeader(
@@ -96,7 +99,6 @@ private fun RecipeDetailHeader(
     Box(
         modifier = modifier
             .fillMaxWidth(),
-//            .aspectRatio(RECIPE_HEADER_ASPECT_RATIO),
     ) {
         ImageWrapper(
             image = recipe.image,
