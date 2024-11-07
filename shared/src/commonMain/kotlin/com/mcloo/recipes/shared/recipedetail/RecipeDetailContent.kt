@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -109,19 +110,25 @@ private fun RecipeDetailHeader(
                 .alpha(expandedRatio),
         )
 
-        RecipeName(
+        RecipeNameToolbar(
             name = recipe.name,
-            headerExpandedRatio = expandedRatio,
             modifier = Modifier
-                .align(Alignment.BottomStart),
+                .align(Alignment.BottomStart)
+                .alpha(1F - expandedRatio),
+        )
+
+        RecipeNameWithGradient(
+            name = recipe.name,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .alpha(expandedRatio),
         )
     }
 }
 
 @Composable
-private fun RecipeName(
+private fun RecipeNameWithGradient(
     name: String,
-    headerExpandedRatio: Float,
     modifier: Modifier = Modifier,
 ) {
     Text(
@@ -133,10 +140,25 @@ private fun RecipeName(
                 brush = Brush.verticalGradient(
                     colors = listOf(
                         Color.Transparent,
-                        Color.Black.copy(alpha = headerExpandedRatio),
+                        Color.Black,
                     ),
                 ),
             ).fillMaxWidth()
+            .padding(16.dp),
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RecipeNameToolbar(
+    name: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = name,
+        style = MaterialTheme.typography.titleLarge,
+        modifier = modifier
+            .fillMaxWidth()
             .padding(16.dp),
     )
 }
