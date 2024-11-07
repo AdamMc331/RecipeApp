@@ -22,7 +22,7 @@ object CollapsibleToolbar {
 
 data class CollapsibleToolbarState(
     val toolbarHeightDp: Dp = EXPANDED_TOOLBAR_HEIGHT,
-    val scrollRatio: Float = 1F,
+    val expandedRatio: Float = 1F,
     val nestedScrollConnection: NestedScrollConnection = object : NestedScrollConnection {},
 )
 
@@ -66,7 +66,7 @@ fun rememberCollapsibleToolbarState(): CollapsibleToolbarState {
     ) {
         CollapsibleToolbarState(
             toolbarHeightDp = toolbarHeightDp,
-            scrollRatio = ratio,
+            expandedRatio = ratio,
             nestedScrollConnection = nestedScrollConnection,
         )
     }

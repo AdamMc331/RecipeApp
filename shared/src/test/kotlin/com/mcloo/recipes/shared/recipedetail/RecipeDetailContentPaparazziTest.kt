@@ -55,7 +55,7 @@ class RecipeDetailContentPaparazziTest : BasePaparazziTest() {
                 recipe = recipe,
                 collapsibleToolbarState = CollapsibleToolbarState(
                     toolbarHeightDp = halfHeight,
-                    scrollRatio = 0.5F,
+                    expandedRatio = 0.5F,
                 ),
             )
         }
@@ -70,7 +70,7 @@ class RecipeDetailContentPaparazziTest : BasePaparazziTest() {
                 recipe = recipe,
                 collapsibleToolbarState = CollapsibleToolbarState(
                     toolbarHeightDp = CollapsibleToolbar.COLLAPSED_TOOLBAR_HEIGHT,
-                    scrollRatio = 0F,
+                    expandedRatio = 0F,
                 ),
             )
         }

@@ -54,7 +54,7 @@ fun RecipeDetailContent(
 
             RecipeDetailHeader(
                 recipe = recipe,
-                expandedRatio = collapsibleToolbarState.scrollRatio,
+                expandedRatio = collapsibleToolbarState.expandedRatio,
                 modifier = Modifier
                     .height(collapsibleToolbarState.toolbarHeightDp),
             )
@@ -111,6 +111,7 @@ private fun RecipeDetailHeader(
 
         RecipeName(
             name = recipe.name,
+            headerExpandedRatio = expandedRatio,
             modifier = Modifier
                 .align(Alignment.BottomStart),
         )
@@ -120,6 +121,7 @@ private fun RecipeDetailHeader(
 @Composable
 private fun RecipeName(
     name: String,
+    headerExpandedRatio: Float,
     modifier: Modifier = Modifier,
 ) {
     Text(
@@ -131,7 +133,7 @@ private fun RecipeName(
                 brush = Brush.verticalGradient(
                     colors = listOf(
                         Color.Transparent,
-                        Color.Black,
+                        Color.Black.copy(alpha = headerExpandedRatio),
                     ),
                 ),
             ).fillMaxWidth()
