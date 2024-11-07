@@ -18,116 +18,42 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mcloo.recipes.shared.ui.components.CollapsibleToolbarState
 import com.mcloo.recipes.shared.ui.components.ImageWrapper
+import com.mcloo.recipes.shared.ui.components.rememberCollapsibleToolbarState
 import com.mcloo.recipes.shared.ui.displaymodels.IngredientDisplayModel
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeDetailDisplayModel
-
-private val EXPANDED_TOOLBAR_HEIGHT = 192.dp
-private val COLLAPSED_TOOLBAR_HEIGHT = 56.dp
-
-@Composable
-private fun Dp.convertToPx(): Float {
-    return with(LocalDensity.current) {
-        this@convertToPx.roundToPx().toFloat()
-    }
-}
-
-data class ScrollingToolbarState(
-    val toolbarHeightDp: Dp,
-    val scrollRatio: Float,
-    val nestedScrollConnection: NestedScrollConnection,
-)
-
-@Composable
-fun rememberScrollingToolbarState(): ScrollingToolbarState {
-    val expandedToolbarHeightPx = EXPANDED_TOOLBAR_HEIGHT.convertToPx()
-    val collapsedToolbarHeightPx = COLLAPSED_TOOLBAR_HEIGHT.convertToPx()
-
-    val toolbarOffsetHeightPx = remember {
-        mutableStateOf(0f)
-    }
-
-    val toolbarHeightDp = with(LocalDensity.current) {
-        EXPANDED_TOOLBAR_HEIGHT + toolbarOffsetHeightPx.value.toDp()
-    }
-
-    // Compare toolbarHeightDp to expandedToolbarHeight
-    // Using this ratio, we can determine how much the user scrolled,
-    // and use that to scale up/down images or text.
-    val totalScrollDistance = (EXPANDED_TOOLBAR_HEIGHT - COLLAPSED_TOOLBAR_HEIGHT)
-    val availableScrollDistance = (toolbarHeightDp - COLLAPSED_TOOLBAR_HEIGHT)
-    val ratio = availableScrollDistance / totalScrollDistance
-    println("ADAMLOG - RATIO: $ratio")
-
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(
-                available: Offset,
-                source: NestedScrollSource,
-            ): Offset {
-                val delta = available.y
-                val newOffset = toolbarOffsetHeightPx.value + delta
-                val minOffset = -expandedToolbarHeightPx + collapsedToolbarHeightPx
-                toolbarOffsetHeightPx.value = newOffset.coerceIn(minOffset, 0f)
-
-                // Watch the scroll, but don't do anything,
-                // so the lazy column still scrolls normally.
-                return Offset.Zero
-            }
-        }
-    }
-
-    return remember(
-        toolbarOffsetHeightPx,
-        ratio,
-        nestedScrollConnection,
-    ) {
-        ScrollingToolbarState(
-            toolbarHeightDp = toolbarHeightDp,
-            scrollRatio = ratio,
-            nestedScrollConnection = nestedScrollConnection,
-        )
-    }
-}
 
 @Composable
 fun RecipeDetailContent(
     recipe: RecipeDetailDisplayModel,
     modifier: Modifier = Modifier,
+    collapsibleToolbarState: CollapsibleToolbarState = rememberCollapsibleToolbarState(),
 ) {
-    val state = rememberScrollingToolbarState()
-
     Surface {
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .nestedScroll(state.nestedScrollConnection),
+                .nestedScroll(collapsibleToolbarState.nestedScrollConnection),
         ) {
             RecipeInformationList(
                 recipe = recipe,
-                contentPadding = PaddingValues(top = state.toolbarHeightDp),
+                contentPadding = PaddingValues(top = collapsibleToolbarState.toolbarHeightDp),
             )
 
             RecipeDetailHeader(
                 recipe = recipe,
-                expandedRatio = state.scrollRatio,
+                expandedRatio = collapsibleToolbarState.scrollRatio,
                 modifier = Modifier
-                    .height(state.toolbarHeightDp),
+                    .height(collapsibleToolbarState.toolbarHeightDp),
             )
         }
     }
