@@ -21,6 +21,7 @@ fun RecipeListContent(
     onSearchQueryChanged: (String) -> Unit,
     recipes: List<RecipeSummaryDisplayModel>,
     onRecipeClicked: (String) -> Unit,
+    showLoading: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Column(

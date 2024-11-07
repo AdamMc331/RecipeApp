@@ -20,17 +20,27 @@ class RecipeListPresenter(
     override fun present(): RecipeListScreen.State {
         var searchQuery by remember { mutableStateOf("") }
         var recipes by remember { mutableStateOf(emptyList<RecipeSummaryDisplayModel>()) }
+        var isFetchingRecipes by remember { mutableStateOf(false) }
 
         searchQuery.useDebounce { query ->
-            // TODO: Add error handling
-            recipeService.getRecipesByName(query).onSuccess { result ->
-                recipes = result.map(::RecipeSummaryDisplayModel)
-            }
+            isFetchingRecipes = true
+
+            recipeService
+                .getRecipesByName(query)
+                .onSuccess { result ->
+                    recipes = result.map(::RecipeSummaryDisplayModel)
+                    isFetchingRecipes = false
+                }.onFailure { err ->
+                    // TODO: Add error handling
+                    println(err)
+                    isFetchingRecipes = false
+                }
         }
 
         return RecipeListScreen.State(
             searchQuery = searchQuery,
             recipes = recipes,
+            isFetchingRecipes = isFetchingRecipes,
         ) { event ->
             when (event) {
                 is RecipeListScreen.Event.RecipeClicked -> {

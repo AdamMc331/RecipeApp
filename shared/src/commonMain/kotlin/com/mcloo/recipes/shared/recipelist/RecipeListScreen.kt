@@ -18,6 +18,7 @@ object RecipeListScreen : Screen {
     data class State(
         val searchQuery: String,
         val recipes: List<RecipeSummaryDisplayModel>,
+        val isFetchingRecipes: Boolean,
         val eventSink: (Event) -> Unit,
     ) : CircuitUiState
 
@@ -48,6 +49,7 @@ object RecipeListScreen : Screen {
                             onRecipeClicked = { id ->
                                 state.eventSink(Event.RecipeClicked(id))
                             },
+                            showLoading = state.isFetchingRecipes,
                             modifier = modifier,
                         )
                     }
