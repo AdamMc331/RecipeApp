@@ -142,7 +142,8 @@ private fun RecipeNameWithGradient(
                         Color.Black,
                     ),
                 ),
-            ).fillMaxWidth()
+            )
+            .fillMaxWidth()
             .padding(16.dp),
     )
 }
