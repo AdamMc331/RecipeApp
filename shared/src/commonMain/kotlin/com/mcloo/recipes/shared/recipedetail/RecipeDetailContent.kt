@@ -31,42 +31,47 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mcloo.recipes.shared.ui.components.ImageWrapper
 import com.mcloo.recipes.shared.ui.displaymodels.IngredientDisplayModel
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeDetailDisplayModel
 
-private const val RECIPE_HEADER_ASPECT_RATIO = 1.5F
+private val EXPANDED_TOOLBAR_HEIGHT = 192.dp
+private val COLLAPSED_TOOLBAR_HEIGHT = 56.dp
 
 @Composable
-fun RecipeDetailContent(
-    recipe: RecipeDetailDisplayModel,
-    modifier: Modifier = Modifier,
-) {
-    val expandedToolbarHeight = 192.dp
-    val expandedToolbarHeightPx = with(LocalDensity.current) {
-        expandedToolbarHeight.roundToPx().toFloat()
+private fun Dp.convertToPx(): Float {
+    return with(LocalDensity.current) {
+        this@convertToPx.roundToPx().toFloat()
     }
+}
 
-    val collapsedToolbarHeight = 56.dp
-    val collapsedToolbarHeightPx = with(LocalDensity.current) {
-        collapsedToolbarHeight.roundToPx().toFloat()
-    }
+data class ScrollingToolbarState(
+    val toolbarHeightDp: Dp,
+    val scrollRatio: Float,
+    val nestedScrollConnection: NestedScrollConnection,
+)
+
+@Composable
+fun rememberScrollingToolbarState(): ScrollingToolbarState {
+    val expandedToolbarHeightPx = EXPANDED_TOOLBAR_HEIGHT.convertToPx()
+    val collapsedToolbarHeightPx = COLLAPSED_TOOLBAR_HEIGHT.convertToPx()
 
     val toolbarOffsetHeightPx = remember {
         mutableStateOf(0f)
     }
 
     val toolbarHeightDp = with(LocalDensity.current) {
-        println("ADAMLOG - OFFSET: $toolbarOffsetHeightPx")
-        expandedToolbarHeight + toolbarOffsetHeightPx.value.toDp()
+        EXPANDED_TOOLBAR_HEIGHT + toolbarOffsetHeightPx.value.toDp()
     }
 
     // Compare toolbarHeightDp to expandedToolbarHeight
     // Using this ratio, we can determine how much the user scrolled,
     // and use that to scale up/down images or text.
-    val scrollDifference = (expandedToolbarHeight - collapsedToolbarHeight)
-    val ratio = (toolbarHeightDp - collapsedToolbarHeight) / scrollDifference
+    val totalScrollDistance = (EXPANDED_TOOLBAR_HEIGHT - COLLAPSED_TOOLBAR_HEIGHT)
+    val availableScrollDistance = (toolbarHeightDp - COLLAPSED_TOOLBAR_HEIGHT)
+    val ratio = availableScrollDistance / totalScrollDistance
     println("ADAMLOG - RATIO: $ratio")
 
     val nestedScrollConnection = remember {
@@ -87,22 +92,42 @@ fun RecipeDetailContent(
         }
     }
 
+    return remember(
+        toolbarOffsetHeightPx,
+        ratio,
+        nestedScrollConnection,
+    ) {
+        ScrollingToolbarState(
+            toolbarHeightDp = toolbarHeightDp,
+            scrollRatio = ratio,
+            nestedScrollConnection = nestedScrollConnection,
+        )
+    }
+}
+
+@Composable
+fun RecipeDetailContent(
+    recipe: RecipeDetailDisplayModel,
+    modifier: Modifier = Modifier,
+) {
+    val state = rememberScrollingToolbarState()
+
     Surface {
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .nestedScroll(nestedScrollConnection),
+                .nestedScroll(state.nestedScrollConnection),
         ) {
             RecipeInformationList(
                 recipe = recipe,
-                contentPadding = PaddingValues(top = toolbarHeightDp),
+                contentPadding = PaddingValues(top = state.toolbarHeightDp),
             )
 
             RecipeDetailHeader(
                 recipe = recipe,
-                expandedRatio = ratio,
+                expandedRatio = state.scrollRatio,
                 modifier = Modifier
-                    .height(toolbarHeightDp),
+                    .height(state.toolbarHeightDp),
             )
         }
     }
