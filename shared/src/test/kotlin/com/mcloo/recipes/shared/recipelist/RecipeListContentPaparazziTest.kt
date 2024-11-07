@@ -19,6 +19,7 @@ class RecipeListContentPaparazziTest : BasePaparazziTest() {
                 onSearchQueryChanged = {},
                 recipes = emptyList(),
                 onRecipeClicked = {},
+                showLoading = false,
             )
         }
     }
@@ -46,6 +47,35 @@ class RecipeListContentPaparazziTest : BasePaparazziTest() {
                 onSearchQueryChanged = {},
                 recipes = recipes,
                 onRecipeClicked = {},
+                showLoading = false,
+            )
+        }
+    }
+
+    @Test
+    fun renderWithLoading() {
+        val query = "Oxtail"
+
+        val recipes = List(10) { index ->
+            RecipeSummaryDisplayModel(
+                id = "123",
+                name = "Oxtail with broad beans",
+                image = ImageDisplayModel.Local(
+                    Res.drawable.oxtail,
+                ),
+                isFavorite = false,
+            )
+        }
+
+        snapshot(
+            screenPadding = 0.dp,
+        ) {
+            RecipeListContent(
+                searchQuery = query,
+                onSearchQueryChanged = {},
+                recipes = recipes,
+                onRecipeClicked = {},
+                showLoading = true,
             )
         }
     }
