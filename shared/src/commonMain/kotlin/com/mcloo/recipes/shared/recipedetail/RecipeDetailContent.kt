@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
@@ -20,46 +20,71 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.mcloo.recipes.shared.ui.components.CollapsibleToolbarState
 import com.mcloo.recipes.shared.ui.components.ImageWrapper
+import com.mcloo.recipes.shared.ui.components.rememberCollapsibleToolbarState
 import com.mcloo.recipes.shared.ui.displaymodels.IngredientDisplayModel
 import com.mcloo.recipes.shared.ui.displaymodels.RecipeDetailDisplayModel
-
-private const val RECIPE_HEADER_ASPECT_RATIO = 1.5F
+import com.mcloo.recipes.shared.ui.utils.plus
 
 @Composable
 fun RecipeDetailContent(
     recipe: RecipeDetailDisplayModel,
     modifier: Modifier = Modifier,
+    collapsibleToolbarState: CollapsibleToolbarState = rememberCollapsibleToolbarState(),
 ) {
-    Column(
+    Surface {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .nestedScroll(collapsibleToolbarState.nestedScrollConnection),
+        ) {
+            RecipeInformationList(
+                recipe = recipe,
+                contentPadding = PaddingValues(
+                    top = collapsibleToolbarState.toolbarHeightDp,
+                ) + PaddingValues(16.dp),
+            )
+
+            RecipeDetailHeader(
+                recipe = recipe,
+                expandedRatio = collapsibleToolbarState.expandedRatio,
+                modifier = Modifier
+                    .height(collapsibleToolbarState.toolbarHeightDp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun RecipeInformationList(
+    recipe: RecipeDetailDisplayModel,
+    contentPadding: PaddingValues,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        contentPadding = contentPadding,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier,
     ) {
-        RecipeDetailHeader(recipe)
+        if (recipe.ingredients.isNotEmpty()) {
+            item {
+                Text(
+                    text = "Ingredients",
+                    style = MaterialTheme.typography.titleLarge,
+                )
+            }
 
-        Surface {
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = modifier,
-            ) {
-                if (recipe.ingredients.isNotEmpty()) {
-                    item {
-                        Text(
-                            text = "Ingredients",
-                            style = MaterialTheme.typography.titleLarge,
-                        )
-                    }
-
-                    item {
-                        IngredientListCard(
-                            ingredients = recipe.ingredients,
-                        )
-                    }
-                }
+            item {
+                IngredientListCard(
+                    ingredients = recipe.ingredients,
+                )
             }
         }
     }
@@ -68,31 +93,40 @@ fun RecipeDetailContent(
 @Composable
 private fun RecipeDetailHeader(
     recipe: RecipeDetailDisplayModel,
+    expandedRatio: Float,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(RECIPE_HEADER_ASPECT_RATIO),
+            .fillMaxWidth(),
     ) {
         ImageWrapper(
             image = recipe.image,
             contentDescription = "${recipe.name} Image",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .alpha(expandedRatio),
         )
 
-        RecipeName(
+        RecipeNameToolbar(
             name = recipe.name,
             modifier = Modifier
-                .align(Alignment.BottomStart),
+                .align(Alignment.BottomStart)
+                .alpha(1F - expandedRatio),
+        )
+
+        RecipeNameWithGradient(
+            name = recipe.name,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .alpha(expandedRatio),
         )
     }
 }
 
 @Composable
-private fun RecipeName(
+private fun RecipeNameWithGradient(
     name: String,
     modifier: Modifier = Modifier,
 ) {
@@ -108,7 +142,23 @@ private fun RecipeName(
                         Color.Black,
                     ),
                 ),
-            ).fillMaxWidth()
+            )
+            .fillMaxWidth()
+            .padding(16.dp),
+    )
+}
+
+// TODO: Just a text component for now, maybe should be a toolbar with a back button?
+@Composable
+private fun RecipeNameToolbar(
+    name: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = name,
+        style = MaterialTheme.typography.titleLarge,
+        modifier = modifier
+            .fillMaxWidth()
             .padding(16.dp),
     )
 }
