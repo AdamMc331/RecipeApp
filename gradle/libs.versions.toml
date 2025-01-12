@@ -1,5 +1,6 @@
 [versions]
 activityCompose = "1.9.3"
+adaptive = "1.0.0-alpha03"
 agp = "8.8.0"
 androidxLifecycle = "2.8.4"
 androidxTest = "1.2.1"
@@ -51,6 +52,10 @@ coil-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coi
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 compose-material = { group = "androidx.compose.material3", name = "material3" }
+compose-material3-adaptive = { module = "org.jetbrains.compose.material3.adaptive:adaptive", version.ref = "adaptive" }
+compose-material3-adaptive-layout = { module = "org.jetbrains.compose.material3.adaptive:adaptive-layout", version.ref = "adaptive" }
+compose-material3-adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation", version.ref = "adaptive" }
+compose-material3-windowsizeclass = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "kmpCompose" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-test-junit = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
